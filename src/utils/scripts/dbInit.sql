@@ -1,131 +1,139 @@
-CREATE TABLE "Companies" (
+CREATE TABLE "companies" (
   "id" SERIAL PRIMARY KEY NOT NULL,
   "name" varchar(255) NOT NULL,
-  "taxId" varchar(255) NOT NULL,
+  "tax_id" varchar(255) NOT NULL,
   "image" varchar(255) DEFAULT null,
-  "category" int DEFAULT null,
-  "phoneNumber" varchar(255) DEFAULT null,
+  "company_type" int DEFAULT null,
+  "phone_number" varchar(255) DEFAULT null,
   "email" varchar(255) NOT NULL,
   "owner" int NOT NULL
   
 );
 
-CREATE TABLE "CompanyTypes" (
+CREATE TABLE "company_types" (
   "id" SERIAL PRIMARY KEY NOT NULL,
   "name" varchar(255) NOT NULL
 );
 
-CREATE TABLE "Users" (
+CREATE TABLE "users" (
   "id" SERIAL PRIMARY KEY NOT NULL,
-  "firstName" varchar(255) DEFAULT null,
-  "lastName" varchar(255) DEFAULT null,
+  "first_name" varchar(255) DEFAULT null,
+  "last_name" varchar(255) DEFAULT null,
   "subscription" int DEFAULT null,
-  "email" varchar(255) NOT NULL,
-  "password " varchar(255) NOT NULL,
+  "email" varchar(255) NOT NULL UNIQUE,
+  "password" varchar(255) NOT NULL,
   "token" varchar(255) DEFAULT null
   
 );
 
-CREATE TABLE "CompanyPermissions" (
+CREATE TABLE "company_permissions" (
   "id" SERIAL PRIMARY KEY NOT NULL,
   "name" varchar(255) DEFAULT null,
   "bit" int DEFAULT null
 );
 
-CREATE TABLE "CompanyRoles" (
+CREATE TABLE "company_roles" (
   "id" SERIAL PRIMARY KEY NOT NULL,
   "name" varchar(255) DEFAULT null,
   "bit" int DEFAULT null
 );
 
-CREATE TABLE "ProductType" (
+CREATE TABLE "product_type" (
   "id" SERIAL PRIMARY KEY NOT NULL,
   "name" varchar(255) DEFAULT null
 );
 
-CREATE TABLE "Products" (
+CREATE TABLE "products" (
   "id" SERIAL PRIMARY KEY NOT NULL,
-  "productType" int NOT NULL,
-  "isoStandart" varchar(255) DEFAULT null,
+  "product_type" int NOT NULL,
+  "iso_standart" varchar(255) DEFAULT null,
   "name" varchar(255) DEFAULT null
 );
 
-CREATE TABLE "IsoStandarts" (
+CREATE TABLE "iso_standarts" (
   "id" SERIAL PRIMARY KEY NOT NULL,
   "code" varchar(255) NOT NULL,
   "name" varchar(255) NOT NULL
 );
 
-CREATE TABLE "MeasureUnits" (
+CREATE TABLE "measure_units" (
   "id" SERIAL PRIMARY KEY NOT NULL,
   "name" varchar(255) NOT NULL
 );
 
-CREATE TABLE "Lot" (
+CREATE TABLE "lot" (
   "id" SERIAL PRIMARY KEY NOT NULL,
   "name" varchar(255) NOT NULL,
-  "companyId" int NOT NULL,
+  "company_id" int NOT NULL,
   "product" int NOT NULL,
   "weight" int NOT NULL,
   "description" varchar(255) NOT NULL,
   "status" int NOT NULL,
-  "measureUnit" int NOT NULL,
+  "measure_unit" int NOT NULL,
   "creator" int NOT NULL
 );
 
-CREATE TABLE "ListingStatuses" (
+CREATE TABLE "listing_statuses" (
   "id" SERIAL PRIMARY KEY NOT NULL,
   "name" varchar(255) NOT NULL
 );
 
-CREATE TABLE "Bids" (
+CREATE TABLE "bids" (
   "id" SERIAL PRIMARY KEY NOT NULL,
   "user" int NOT NULL,
-  "companyId" int NOT NULL,
+  "company_id" int NOT NULL,
   "listing" int NOT NULL,
   "amount" int NOT NULL
 );
 
-CREATE TABLE "UserCompanyPermissions" (
-  "userId" int NOT NULL,
-  "companyId" int NOT NULL,
+CREATE TABLE "user_company_permissions" (
+  "user_id" int NOT NULL,
+  "company_id" int NOT NULL,
   "role" int,
-  PRIMARY KEY ("userId", "companyId")
+  PRIMARY KEY ("user_id", "company_id")
 );
 
-CREATE TABLE "Subscriptions" (
+CREATE TABLE "subscriptions" (
   "id" SERIAL PRIMARY KEY NOT NULL,
   "name" varchar(255) NOT NULL
 );
 
-ALTER TABLE "Users" ADD FOREIGN KEY ("subscription") REFERENCES "Subscriptions" ("id");
+ALTER TABLE "users" ADD FOREIGN KEY ("subscription") REFERENCES "subscriptions" ("id");
 
-ALTER TABLE "Lot" ADD FOREIGN KEY ("status") REFERENCES "ListingStatuses" ("id");
+ALTER TABLE "lot" ADD FOREIGN KEY ("status") REFERENCES "listing_statuses" ("id");
 
-ALTER TABLE "Bids" ADD FOREIGN KEY ("companyId") REFERENCES "Companies" ("id");
+ALTER TABLE "bids" ADD FOREIGN KEY ("company_id") REFERENCES "companies" ("id");
 
-ALTER TABLE "Bids" ADD FOREIGN KEY ("user") REFERENCES "Users" ("id");
+ALTER TABLE "bids" ADD FOREIGN KEY ("user") REFERENCES "users" ("id");
 
-ALTER TABLE "Bids" ADD FOREIGN KEY ("listing") REFERENCES "Lot" ("id");
+ALTER TABLE "bids" ADD FOREIGN KEY ("listing") REFERENCES "lot" ("id");
 
-ALTER TABLE "Lot" ADD FOREIGN KEY ("companyId") REFERENCES "Companies" ("id");
+ALTER TABLE "lot" ADD FOREIGN KEY ("company_id") REFERENCES "companies" ("id");
 
-ALTER TABLE "Lot" ADD FOREIGN KEY ("product") REFERENCES "Products" ("id");
+ALTER TABLE "lot" ADD FOREIGN KEY ("product") REFERENCES "products" ("id");
 
-ALTER TABLE "Lot" ADD FOREIGN KEY ("measureUnit") REFERENCES "MeasureUnits" ("id");
+ALTER TABLE "lot" ADD FOREIGN KEY ("measure_unit") REFERENCES "measure_units" ("id");
 
-ALTER TABLE "UserCompanyPermissions" ADD FOREIGN KEY ("role") REFERENCES "CompanyRoles" ("id");
+ALTER TABLE "user_company_permissions" ADD FOREIGN KEY ("role") REFERENCES "company_roles" ("id");
 
-ALTER TABLE "Lot" ADD FOREIGN KEY ("creator") REFERENCES "Users" ("id");
+ALTER TABLE "lot" ADD FOREIGN KEY ("creator") REFERENCES "users" ("id");
 
-ALTER TABLE "UserCompanyPermissions" ADD FOREIGN KEY ("userId") REFERENCES "Users" ("id");
+ALTER TABLE "user_company_permissions" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
-ALTER TABLE "UserCompanyPermissions" ADD FOREIGN KEY ("companyId") REFERENCES "Companies" ("id");
+ALTER TABLE "user_company_permissions" ADD FOREIGN KEY ("company_id") REFERENCES "companies" ("id");
 
-ALTER TABLE "Products" ADD FOREIGN KEY ("productType") REFERENCES "ProductType" ("id");
+ALTER TABLE "products" ADD FOREIGN KEY ("product_type") REFERENCES "product_type" ("id");
 
-ALTER TABLE "Companies" ADD FOREIGN KEY ("category") REFERENCES "CompanyTypes" ("id");
+ALTER TABLE "companies" ADD FOREIGN KEY ("company_type") REFERENCES "company_types" ("id");
 
-ALTER TABLE "Companies" ADD FOREIGN KEY ("owner") REFERENCES "Users" ("id");
+ALTER TABLE "companies" ADD FOREIGN KEY ("owner") REFERENCES "users" ("id");
 
---ALTER TABLE "Products" ADD FOREIGN KEY ("isoStandart") REFERENCES "IsoStandarts" ("id");
+--ALTER TABLE "products" ADD FOREIGN KEY ("iso_standart") REFERENCES "iso_standarts" ("id");
+
+
+INSERT INTO subscriptions(name) VALUES ('Free'), ('Basic'), ('Premium'), ('Enterprise');
+INSERT INTO company_types(name) VALUES ('Public'), ('Private'),('Corporation');
+INSERT INTO company_roles(name, bit) VALUES ('Admin',1111), ('User',0001);
+INSERT INTO listing_statuses(name) VALUES ('Open'), ('Closed'), ('Sold');
+INSERT INTO users(first_name, last_name, subscription, email, password, token) VALUES ('Test', 'User', 1, 'user@a.a', '123456789', '123456789');
+INSERT INTO companies(name, tax_id, company_type, phone_number, email, owner) VALUES ('Test Company', '123456789', 1, '123456789', 'company@a.a', 1);

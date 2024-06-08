@@ -1,9 +1,9 @@
 import User from '@/utils/interfaces/user.interface';
 import {
     getAllDb,
-    getbyIdDb,
+    getFromDb,
     createObjectDb,
-    deletebyIdDb,
+    deleteFromDb,
     updateObjectDb,
 } from '@/utils/scripts/sqlQueries';
 import HttpException from '../../utils/exceptions/http.exception';
@@ -12,23 +12,23 @@ class UserService {
         const users = await getAllDb('users');
         return users;
     }
-    public async updateUser(id: string, user: User): Promise<String> {
-        const updatedUser = await updateObjectDb(id, user, 'users');
+    public async updateUser(id: string, user: User): Promise<string> {
+        const updatedUser = await updateObjectDb({ id: id }, user, 'users');
         if (!updatedUser) throw new HttpException(409, 'User not found');
         return updatedUser;
     }
     public async getUser(id: string): Promise<User> {
-        const user = await getbyIdDb(id, 'users');
+        const user = await getFromDb({ id: id }, 'users');
         if (!user) throw new HttpException(409, 'User not found');
         user.password = '******';
         return user;
     }
-    public async deleteUser(id: string): Promise<String> {
-        const deletedUser = await deletebyIdDb(id, 'users');
+    public async deleteUser(id: string): Promise<string> {
+        const deletedUser = await deleteFromDb({ id: id }, 'users');
         if (!deletedUser) throw new HttpException(409, 'User not found');
         return deletedUser;
     }
-    public async createUser(user: User): Promise<String> {
+    public async createUser(user: User): Promise<string> {
         const createdUser = await createObjectDb(user, 'users');
         return createdUser;
     }

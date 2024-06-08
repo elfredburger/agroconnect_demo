@@ -135,5 +135,13 @@ INSERT INTO subscriptions(name) VALUES ('Free'), ('Basic'), ('Premium'), ('Enter
 INSERT INTO company_types(name) VALUES ('Public'), ('Private'),('Corporation');
 INSERT INTO company_roles(name, bit) VALUES ('Admin',1111), ('User',0001);
 INSERT INTO listing_statuses(name) VALUES ('Open'), ('Closed'), ('Sold');
-INSERT INTO users(first_name, last_name, subscription, email, password, token) VALUES ('Test', 'User', 1, 'user@a.a', '123456789', '123456789');
-INSERT INTO companies(name, tax_id, company_type, phone_number, email, owner) VALUES ('Test Company', '123456789', 1, '123456789', 'company@a.a', 1);
+INSERT INTO users(first_name, last_name, subscription, email, password, token) VALUES 
+('firstname1', 'lastname1', 1, 'user1@a.a', '123456789', 'token1'),
+('firstname2', 'lastname2', 2, 'user2@a.a', '123456789', 'token2'),
+('firstname3', 'lastname3', 3, 'user3@a.a', '123456789', 'token3'),
+('firstname4', 'lastname4', 4, 'user4@a.a', '123456789', 'token4');
+INSERT INTO companies(name, tax_id, company_type, phone_number, email, owner) VALUES 
+('TestCompany1', 'taxid1', 1, '123456789', 'company1@a.a', 1),
+('TestCompany2', 'taxid2', 2, '123456789', 'company2@a.a', 2),
+('TestCompany3', 'taxid3', 3, '123456789', 'company3@a.a', 3),
+('TestCompany4', 'taxid4', 1, '123456789', 'company4@a.a', 4);

@@ -3,7 +3,6 @@ import Controller from '../../utils/interfaces/controller.interface';
 import UserService from './users.service';
 import User from '@/utils/interfaces/user.interface';
 import HttpException from '@/utils/exceptions/http.exception';
-import morgan from 'morgan';
 class UserController implements Controller {
     public path = '/users';
     public router = Router();
@@ -23,7 +22,7 @@ class UserController implements Controller {
         req: Request,
         res: Response,
         next: NextFunction,
-    ): Promise<User[] | void> => {
+    ): Promise<void> => {
         try {
             const users = await this.UserService.getAllUsers();
             console.log(users);
@@ -50,7 +49,7 @@ class UserController implements Controller {
         req: Request,
         res: Response,
         next: NextFunction,
-    ): Promise<User | void> => {
+    ): Promise<void> => {
         try {
             const userId = req.params.id;
             const user = await this.UserService.getUser(userId);

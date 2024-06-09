@@ -1,5 +1,4 @@
 import client from '../../db';
-// Не пугайся, я сам прихуел немного
 export async function getAllDb(table: string): Promise<any[]> {
     const query = `SELECT * FROM ${client.escapeIdentifier(table)}`;
 

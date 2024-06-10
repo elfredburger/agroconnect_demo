@@ -12,19 +12,19 @@ class UserService {
         const users = await getAllDb('users');
         return users;
     }
-    public async updateUser(id: string, user: User): Promise<string> {
-        const updatedUser = await updateObjectDb({ id: id }, user, 'users');
+    public async updateUser(param: object, user: User): Promise<string> {
+        const updatedUser = await updateObjectDb(param, user, 'users');
         if (!updatedUser) throw new HttpException(409, 'User not found');
         return updatedUser;
     }
-    public async getUser(id: string): Promise<User> {
-        const user = await getFromDb({ id: id }, 'users');
+    public async getUser(param: object): Promise<User> {
+        const user = await getFromDb(param, 'users');
         if (!user) throw new HttpException(409, 'User not found');
         user.password = '******';
         return user;
     }
-    public async deleteUser(id: string): Promise<string> {
-        const deletedUser = await deleteFromDb({ id: id }, 'users');
+    public async deleteUser(param: object): Promise<string> {
+        const deletedUser = await deleteFromDb(param, 'users');
         if (!deletedUser) throw new HttpException(409, 'User not found');
         return deletedUser;
     }

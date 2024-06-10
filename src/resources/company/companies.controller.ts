@@ -1,8 +1,8 @@
 import { NextFunction, Router, Request, Response } from 'express';
 import Controller from '../../utils/interfaces/controller.interface';
 import CompanyService from './companies.service';
-import Company from '@/utils/interfaces/company.interface';
 import HttpException from '@/utils/exceptions/http.exception';
+import Company from '@/utils/interfaces/company.interface';
 class CompanyController implements Controller {
     public path = '/companies';
     public router = Router();
@@ -36,7 +36,9 @@ class CompanyController implements Controller {
         next: NextFunction,
     ): Promise<void> => {
         try {
-            const company = await this.CompanyService.createCompany(req.body);
+            const companyData: Company = req.body;
+            const company =
+                await this.CompanyService.createCompany(companyData);
             res.json(company);
         } catch (error) {
             next(new HttpException(400, 'Cannot create company'));
@@ -48,9 +50,8 @@ class CompanyController implements Controller {
         next: NextFunction,
     ): Promise<void> => {
         try {
-            const company = await this.CompanyService.getCompanyById(
-                req.params.id,
-            );
+            const id = req.params.id;
+            const company = await this.CompanyService.getCompany({ id: id });
             res.json(company);
         } catch (error) {
             next(new HttpException(400, 'Cannot get company'));
@@ -62,9 +63,11 @@ class CompanyController implements Controller {
         next: NextFunction,
     ): Promise<void> => {
         try {
+            const companyData: Company = req.body;
+            const id = req.params.id;
             const company = await this.CompanyService.updateCompany(
-                req.params.id,
-                req.body,
+                { id: id },
+                companyData,
             );
             res.json(company);
         } catch (error) {
@@ -77,9 +80,8 @@ class CompanyController implements Controller {
         next: NextFunction,
     ): Promise<void> => {
         try {
-            const company = await this.CompanyService.deleteCompany(
-                req.params.id,
-            );
+            const id = req.params.id;
+            const company = await this.CompanyService.deleteCompany({ id: id });
             res.json(company);
         } catch (error) {
             next(new HttpException(400, 'Cannot delete company'));

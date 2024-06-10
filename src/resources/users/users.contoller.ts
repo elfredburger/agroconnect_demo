@@ -15,7 +15,7 @@ class UserController implements Controller {
         this.router.get(`${this.path}/getall`, this.getAllUsers);
         this.router.post(`${this.path}/create`, this.createUser);
         this.router.delete(`${this.path}/:id`, this.deleteUser);
-        this.router.get(`${this.path}/:id`, this.getUserById);
+        this.router.get(`${this.path}/:id`, this.getUser);
         this.router.patch(`${this.path}/:id`, this.updateUser);
     }
     private getAllUsers = async (
@@ -25,7 +25,6 @@ class UserController implements Controller {
     ): Promise<void> => {
         try {
             const users = await this.UserService.getAllUsers();
-            console.log(users);
             res.json(users);
         } catch (error) {
             next(new HttpException(400, 'Cannot get users'));
@@ -37,22 +36,25 @@ class UserController implements Controller {
         next: NextFunction,
     ): Promise<void> => {
         try {
-            const userId = req.params.id;
+            const id = req.params.id;
             const userData: User = req.body;
-            const user = await this.UserService.updateUser(userId, userData);
+            const user = await this.UserService.updateUser(
+                { id: id },
+                userData,
+            );
             res.json(user);
         } catch (error) {
             next(new HttpException(400, 'Cannot update user'));
         }
     };
-    private getUserById = async (
+    private getUser = async (
         req: Request,
         res: Response,
         next: NextFunction,
     ): Promise<void> => {
         try {
-            const userId = req.params.id;
-            const user = await this.UserService.getUser(userId);
+            const id = req.params.id;
+            const user = await this.UserService.getUser({ id: id });
             res.json(user);
         } catch (error) {
             next(new HttpException(400, 'Cannot get user'));
@@ -64,8 +66,8 @@ class UserController implements Controller {
         next: NextFunction,
     ): Promise<void> => {
         try {
-            const userId = req.params.id;
-            await this.UserService.deleteUser(userId);
+            const id = req.params.id;
+            await this.UserService.deleteUser({ id: id });
             res.json('user deleted');
         } catch (error) {
             next(new HttpException(400, 'Cannot delete user'));

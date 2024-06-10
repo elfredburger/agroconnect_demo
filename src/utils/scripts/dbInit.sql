@@ -136,6 +136,8 @@ CREATE TABLE "incoterms"  (
   "id" SERIAL PRIMARY KEY NOT NULL,
   "name" varchar(255) NOT NULL
 );
+
+
 ALTER TABLE "users" ADD FOREIGN KEY ("subscription_id") REFERENCES "subscriptions" ("id");
 
 ALTER TABLE "lot" ADD FOREIGN KEY ("status_id") REFERENCES "listing_statuses" ("id");
@@ -180,19 +182,21 @@ ALTER TABLE "products" ADD FOREIGN KEY ("dstu_standrat_id") REFERENCES "dstu_sta
 ALTER TABLE "products" ADD FOREIGN KEY ("product_sort_id") REFERENCES "product_sort" ("id");
 
 
-INSERT INTO subscriptions(name) VALUES ('Free'), ('Basic'), ('Premium'), ('Enterprise');
 INSERT INTO product_type(name) VALUES ('Beef'), ('Avocadoes'), ('Buckwheat'), ('Grain'), ('Wheat'), ('Corn');
+INSERT INTO product_sort(type_id,name) VALUES (1, 'sort1'), (1, 'sort2'), (2, 'sort1'), (2, 'sort2');
+INSERT INTO listing_statuses(name) VALUES ('Open'), ('Closed'), ('Sold');
+INSERT INTO subscriptions(name) VALUES ('Free'), ('Basic'), ('Premium'), ('Enterprise');
 INSERT INTO product_country(name) VALUES ('Ukraine'), ('Poland'), ('Germany'), ('Italy'), ('USA'), ('Japan');
 INSERT INTO product_region(name) VALUES ('Mykolaiv Region'), ('Kyiv Region'), ('Lviv Region'), ('Sumy Region'), ('Konstantinovka Region');
 INSERT INTO dstu_standrats(name, code) VALUES ('DSTU 1', 'DSTU1'), ('DSTU 2', 'DSTU2'), ('DSTU 3', 'DSTU3'), ('DSTU 4', 'DSTU4'), ('DSTU 5', 'DSTU5');
 INSERT INTO iso_standarts(code, name) VALUES ('ISO 1', 'ISO1'), ('ISO 2', 'ISO2'), ('ISO 3', 'ISO3'), ('ISO 4', 'ISO4'), ('ISO 5', 'ISO5');
+ALTER SEQUENCE public.iso_standarts_id_seq RESTART WITH 1;
 INSERT INTO incoterms(name) VALUES ('CIF'), ('CRF'), ('CIP'),('CPT'),('DAP'),('DDP'),('DPU'),('EXW'),
 ('FAS'),('FCA'),('FOB');
 INSERT INTO measure_units(name) VALUES ('Kilogram'), ('Ton'), ('Piece'), ('Litre'),('Metric Tone'),
 ('Cubic Meter'),('Cubic Foot');
 INSERT INTO company_types(name) VALUES ('Public'), ('Private'),('Corporation');
 INSERT INTO company_roles(name, bit) VALUES ('Admin',1111), ('User',0001);
-INSERT INTO listing_statuses(name) VALUES ('Open'), ('Closed'), ('Sold');
 INSERT INTO users(first_name, last_name, subscription_id, email, password, token) VALUES 
 ('firstname1', 'lastname1', 1, 'user1@a.a', '123456789', 'token1'),
 ('firstname2', 'lastname2', 2, 'user2@a.a', '123456789', 'token2'),
@@ -203,3 +207,18 @@ INSERT INTO companies(name, tax_id, company_type_id, phone_number, email, owner_
 ('TestCompany2', 'taxid2', 2, '123456789', 'company2@a.a', 2),
 ('TestCompany3', 'taxid3', 3, '123456789', 'company3@a.a', 3),
 ('TestCompany4', 'taxid4', 1, '123456789', 'company4@a.a', 4);
+INSERT INTO products(product_sort_id, product_region_id, product_country_id, dstu_standrat_id, iso_standart_id, name, moisture, damage, dirt, undersize) 
+VALUES (1, 1, 1, 1, 1, 'product1', 10, 10, 10, 10), (2, 2, 2, 2, 2, 'product2', 20, 20, 20, 20), 
+(3, 3, 3, 3, 3, 'product3', 30, 30, 30, 30), (4, 4, 4, 4, 4, 'product4', 40, 40, 40, 40);
+INSERT INTO lot(name, company_id, product_id, weight, description, status_id, measure_unit_id, creator_id, incoterm_id, packaging) 
+VALUES ('lot1', 1, 1, 100, 'description', 1, 1, 1, 1, 'packaging');
+
+
+
+
+
+
+
+
+
+

@@ -13,8 +13,8 @@ class CompanyService {
         return companies;
     }
 
-    public async getCompanyById(companyId: string): Promise<Company> {
-        const company = await getFromDb({ id: companyId }, 'companies');
+    public async getCompany(param: object): Promise<Company> {
+        const company = await getFromDb(param, 'companies');
         if (!company) {
             throw new HttpException(409, 'Company not found');
         }
@@ -30,13 +30,11 @@ class CompanyService {
     }
 
     public async updateCompany(
-        companyId: string,
+        param: object,
         companyData: Company,
     ): Promise<string> {
-        console.log(companyData);
-        console.log({ id: companyId });
         const updateCompanyData = await updateObjectDb(
-            { id: companyId },
+            param,
             companyData,
             'companies',
         );
@@ -44,11 +42,8 @@ class CompanyService {
         return updateCompanyData;
     }
 
-    public async deleteCompany(companyId: string): Promise<string> {
-        const deleteCompanyData = await deleteFromDb(
-            { id: companyId },
-            'companies',
-        );
+    public async deleteCompany(param: object): Promise<string> {
+        const deleteCompanyData = await deleteFromDb(param, 'companies');
         return deleteCompanyData;
     }
 }

@@ -112,3 +112,4 @@ class LotController implements Controller {
         }
     };
 }
+export default LotController;

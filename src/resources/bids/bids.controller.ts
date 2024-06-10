@@ -83,3 +83,4 @@ class BidController implements Controller {
         }
     };
 }
+export default BidController;

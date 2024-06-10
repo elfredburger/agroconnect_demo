@@ -23,7 +23,8 @@ async function authenticatedMiddleware(
             return next(new HttpException(401, 'Unauthorized'));
         }
         const user = await getFromDb({ token: accessToken }, 'users');
-        if (!user) {
+        console.log(user);
+        if (user.length === 0) {
             return next(new HttpException(401, 'Unauthorized'));
         }
         req.user = user; //тут не понятно с типами и как это исправить

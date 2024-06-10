@@ -6,6 +6,7 @@ import CompanyController from './resources/company/companies.controller';
 import UserContoller from './resources/users/users.contoller';
 import LotController from './resources/lots/lot.controller';
 import BidController from './resources/bids/bids.controller';
+import AuthController from './resources/auth/auth.controller';
 
 //validateEnv();
 const app = new App(
@@ -14,6 +15,7 @@ const app = new App(
         new CompanyController(),
         new LotController(),
         new BidController(),
+        new AuthController(),
     ],
     3000,
 );

@@ -15,6 +15,7 @@ export async function deleteFromDb(
     const query = `DELETE FROM ${client.escapeIdentifier(table)} WHERE ${keys
         .map((key, i) => `${client.escapeIdentifier(key)} = $${i + 1}`)
         .join(' AND ')}`;
+
     `DELETE FROM companies WHERE id = $1 AND name = $2`;
     await client.query(query, values);
     return 'deleted';
@@ -61,7 +62,7 @@ export async function updateObjectDb(
 
     return 'updated';
 }
-export async function getFromDb(params: object, table: string): Promise<any> {
+export async function getFromDb(params: object, table: string): Promise<any[]> {
     const keys = Object.keys(params);
     const values = Object.values(params);
     const query = `SELECT * FROM ${client.escapeIdentifier(table)} WHERE ${keys

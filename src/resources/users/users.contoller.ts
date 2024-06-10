@@ -3,6 +3,7 @@ import Controller from '../../utils/interfaces/controller.interface';
 import UserService from './users.service';
 import User from '@/utils/interfaces/user.interface';
 import HttpException from '@/utils/exceptions/http.exception';
+import bcrypt from 'bcryptjs';
 class UserController implements Controller {
     public path = '/users';
     public router = Router();
@@ -54,7 +55,8 @@ class UserController implements Controller {
     ): Promise<void> => {
         try {
             const id = req.params.id;
-            const user = await this.UserService.getUser({ id: id });
+
+            const user: User = await this.UserService.getUser({ id: id });
             res.json(user);
         } catch (error) {
             next(new HttpException(400, 'Cannot get user'));

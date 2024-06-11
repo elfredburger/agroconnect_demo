@@ -14,7 +14,9 @@ class UserService {
         return users;
     }
     public async updateUser(param: object, user: User): Promise<string> {
-        user.password = await bcrypt.hash(user.password, 10);
+        if (user.password) {
+            user.password = await bcrypt.hash(user.password, 10);
+        }
         const updatedUser = await updateObjectDb(param, user, 'users');
         if (!updatedUser) throw new HttpException(409, 'User not found');
         return updatedUser;

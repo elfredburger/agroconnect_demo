@@ -1,0 +1,56 @@
+api/users/:id - DELETE {} 
+api/users/getall - GET {} return {users[]}
+api/users/:id - PATCH {} 
+api/users/:id - GET {}  return {user}
+api/users/create - POST{user} 
+
+api/companies/:id - DELETE {} 
+api/companies/getall - GET {} return {companies[]}
+api/companies/:id - PATCH {} 
+api/companies/:id - GET {} return {company}
+api/companies/create - POST{company} 
+
+api/lots/:id - DELETE {} 
+api/lots/getall - GET {} return {lot[]}
+api/lots/:id - PATCH {} 
+api/lots/:id - GET {} return {lot}
+api/lots/create - POST{lot} 
+api/lots/company/:id - GET{} return {lot[]}
+api/lots/user/:id - GET{} return {lot[]}
+
+
+api/bids/:id - DELETE {} 
+api/bids/getall - GET {} return {bid[]}
+api/bids/:id - PATCH {} 
+api/bids/:id - GET {} return {bid}
+api/bids/create - POST{bid} 
+
+
+api/auth/login - POST {email,password} return {token}
+api/auth/logout - POST {} return {}
+api/auth/refresh - POST {} return {}
+
+api/comptypes - GET {} return {comptype[]}
+
+api/dstu - GET {} return {dstu[]}
+
+api/incoterms - GET {} return {incoterms[]}
+
+api/iso - GET {} return {iso[]}
+
+api/lstatuses - GET {} return {lsatuses[]}
+
+api/measures - GET {} return {measures[]}
+
+api/countries - GET {} return {countries[]}
+
+api/regions - GET {} return {regions[]}
+
+api/sorts - GET {} return {sort[]}
+
+api/product_types - GET {} return {product_types[]}
+
+api/subscriptions - GET {} return {subscriptions[]}
+
+
+

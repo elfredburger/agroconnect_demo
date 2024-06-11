@@ -38,12 +38,12 @@ CREATE TABLE "company_roles" (
   "bit" int DEFAULT null
 );
 
-CREATE TABLE "product_type" (
+CREATE TABLE "product_types" (
   "id" SERIAL PRIMARY KEY NOT NULL,
   "name" varchar(255) DEFAULT null
 );
 
-CREATE TABLE "product_sort"(
+CREATE TABLE "product_sorts"(
   "id" SERIAL PRIMARY KEY NOT NULL,
   "type_id" int DEFAULT null,
   "name" varchar(255) DEFAULT null
@@ -55,12 +55,12 @@ CREATE TABLE "iso_standarts" (
   "name" varchar(255) NOT NULL
 );
 
-CREATE TABLE "product_region"(
+CREATE TABLE "product_regions"(
   "id" SERIAL PRIMARY KEY NOT NULL,
   "name" varchar(255) DEFAULT null
 );
 
-CREATE TABLE "product_country" (
+CREATE TABLE "product_countries" (
   "id" SERIAL PRIMARY KEY NOT NULL,
   "name" varchar(255) NOT NULL
 );
@@ -73,9 +73,9 @@ CREATE TABLE "dstu_standrats" (
 
 CREATE TABLE "products" (
   "id" SERIAL PRIMARY KEY NOT NULL,
-  "product_sort_id" int NOT NULL,
-  "product_region_id" int NOT NULL,
-  "product_country_id" int NOT NULL,
+  "product_sorts_id" int NOT NULL,
+  "product_regions_id" int NOT NULL,
+  "product_countries_id" int NOT NULL,
   "dstu_standrat_id" int NOT NULL,
   "iso_standart_id" int DEFAULT null,
   "name" varchar(255) DEFAULT null,
@@ -93,7 +93,7 @@ CREATE TABLE "measure_units" (
   "name" varchar(255) NOT NULL
 );
 
-CREATE TABLE "lot" (
+CREATE TABLE "lots" (
   "id" SERIAL PRIMARY KEY NOT NULL,
   "name" varchar(255) NOT NULL,
   "company_id" int NOT NULL,
@@ -140,25 +140,25 @@ CREATE TABLE "incoterms"  (
 
 ALTER TABLE "users" ADD FOREIGN KEY ("subscription_id") REFERENCES "subscriptions" ("id");
 
-ALTER TABLE "lot" ADD FOREIGN KEY ("status_id") REFERENCES "listing_statuses" ("id");
+ALTER TABLE "lots" ADD FOREIGN KEY ("status_id") REFERENCES "listing_statuses" ("id");
 
 ALTER TABLE "bids" ADD FOREIGN KEY ("company_id") REFERENCES "companies" ("id");
 
 ALTER TABLE "bids" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
-ALTER TABLE "bids" ADD FOREIGN KEY ("listing_id") REFERENCES "lot" ("id");
+ALTER TABLE "bids" ADD FOREIGN KEY ("listing_id") REFERENCES "lots" ("id");
 
-ALTER TABLE "lot" ADD FOREIGN KEY ("company_id") REFERENCES "companies" ("id");
+ALTER TABLE "lots" ADD FOREIGN KEY ("company_id") REFERENCES "companies" ("id");
 
-ALTER TABLE "lot" ADD FOREIGN KEY ("product_id") REFERENCES "products" ("id");
+ALTER TABLE "lots" ADD FOREIGN KEY ("product_id") REFERENCES "products" ("id");
 
-ALTER TABLE "lot" ADD FOREIGN KEY ("measure_unit_id") REFERENCES "measure_units" ("id");
+ALTER TABLE "lots" ADD FOREIGN KEY ("measure_unit_id") REFERENCES "measure_units" ("id");
 
-ALTER TABLE "lot" ADD FOREIGN KEY ("incoterm_id") REFERENCES "incoterms" ("id");
+ALTER TABLE "lots" ADD FOREIGN KEY ("incoterm_id") REFERENCES "incoterms" ("id");
 
 ALTER TABLE "user_company_permissions" ADD FOREIGN KEY ("role") REFERENCES "company_roles" ("id");
 
-ALTER TABLE "lot" ADD FOREIGN KEY ("creator_id") REFERENCES "users" ("id");
+ALTER TABLE "lots" ADD FOREIGN KEY ("creator_id") REFERENCES "users" ("id");
 
 ALTER TABLE "user_company_permissions" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
@@ -169,25 +169,25 @@ ALTER TABLE "companies" ADD FOREIGN KEY ("company_type_id") REFERENCES "company_
 
 ALTER TABLE "companies" ADD FOREIGN KEY ("owner_id") REFERENCES "users" ("id");
 
-ALTER TABLE "product_sort" ADD FOREIGN KEY ("type_id") REFERENCES "product_type" ("id");
+ALTER TABLE "product_sorts" ADD FOREIGN KEY ("type_id") REFERENCES "product_types" ("id");
 
 ALTER TABLE "products" ADD FOREIGN KEY ("iso_standart_id") REFERENCES "iso_standarts" ("id");
 
-ALTER TABLE "products" ADD FOREIGN KEY ("product_region_id") REFERENCES "product_region" ("id");
+ALTER TABLE "products" ADD FOREIGN KEY ("product_regions_id") REFERENCES "product_regions" ("id");
 
-ALTER TABLE "products" ADD FOREIGN KEY ("product_country_id") REFERENCES "product_country" ("id");
+ALTER TABLE "products" ADD FOREIGN KEY ("product_countries_id") REFERENCES "product_countries" ("id");
 
 ALTER TABLE "products" ADD FOREIGN KEY ("dstu_standrat_id") REFERENCES "dstu_standrats" ("id");
 
-ALTER TABLE "products" ADD FOREIGN KEY ("product_sort_id") REFERENCES "product_sort" ("id");
+ALTER TABLE "products" ADD FOREIGN KEY ("product_sorts_id") REFERENCES "product_sorts" ("id");
 
 
-INSERT INTO product_type(name) VALUES ('Beef'), ('Avocadoes'), ('Buckwheat'), ('Grain'), ('Wheat'), ('Corn');
-INSERT INTO product_sort(type_id,name) VALUES (1, 'sort1'), (1, 'sort2'), (2, 'sort1'), (2, 'sort2');
+INSERT INTO product_types(name) VALUES ('Beef'), ('Avocadoes'), ('Buckwheat'), ('Grain'), ('Wheat'), ('Corn');
+INSERT INTO product_sorts(type_id,name) VALUES (1, 'sort1'), (1, 'sort2'), (2, 'sort1'), (2, 'sort2');
 INSERT INTO listing_statuses(name) VALUES ('Open'), ('Closed'), ('Sold');
 INSERT INTO subscriptions(name) VALUES ('Free'), ('Basic'), ('Premium'), ('Enterprise');
-INSERT INTO product_country(name) VALUES ('Ukraine'), ('Poland'), ('Germany'), ('Italy'), ('USA'), ('Japan');
-INSERT INTO product_region(name) VALUES ('Mykolaiv Region'), ('Kyiv Region'), ('Lviv Region'), ('Sumy Region'), ('Konstantinovka Region');
+INSERT INTO product_countries(name) VALUES ('Ukraine'), ('Poland'), ('Germany'), ('Italy'), ('USA'), ('Japan');
+INSERT INTO product_regions(name) VALUES ('Mykolaiv Region'), ('Kyiv Region'), ('Lviv Region'), ('Sumy Region'), ('Konstantinovka Region');
 INSERT INTO dstu_standrats(name, code) VALUES ('DSTU 1', 'DSTU1'), ('DSTU 2', 'DSTU2'), ('DSTU 3', 'DSTU3'), ('DSTU 4', 'DSTU4'), ('DSTU 5', 'DSTU5');
 INSERT INTO iso_standarts(code, name) VALUES ('ISO 1', 'ISO1'), ('ISO 2', 'ISO2'), ('ISO 3', 'ISO3'), ('ISO 4', 'ISO4'), ('ISO 5', 'ISO5');
 ALTER SEQUENCE public.iso_standarts_id_seq RESTART WITH 1;
@@ -207,10 +207,10 @@ INSERT INTO companies(name, tax_id, company_type_id, phone_number, email, owner_
 ('TestCompany2', 'taxid2', 2, '123456789', 'company2@a.a', 2),
 ('TestCompany3', 'taxid3', 3, '123456789', 'company3@a.a', 3),
 ('TestCompany4', 'taxid4', 1, '123456789', 'company4@a.a', 4);
-INSERT INTO products(product_sort_id, product_region_id, product_country_id, dstu_standrat_id, iso_standart_id, name, moisture, damage, dirt, undersize) 
+INSERT INTO products(product_sorts_id, product_regions_id, product_countries_id, dstu_standrat_id, iso_standart_id, name, moisture, damage, dirt, undersize) 
 VALUES (1, 1, 1, 1, 1, 'product1', 10, 10, 10, 10), (2, 2, 2, 2, 2, 'product2', 20, 20, 20, 20), 
 (3, 3, 3, 3, 3, 'product3', 30, 30, 30, 30), (4, 4, 4, 4, 4, 'product4', 40, 40, 40, 40);
-INSERT INTO lot(name, company_id, product_id, weight, description, status_id, measure_unit_id, creator_id, incoterm_id, packaging) 
+INSERT INTO lots(name, company_id, product_id, weight, description, status_id, measure_unit_id, creator_id, incoterm_id, packaging) 
 VALUES ('lot1', 1, 1, 100, 'description', 1, 1, 1, 1, 'packaging');
 
 

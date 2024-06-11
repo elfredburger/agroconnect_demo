@@ -13,7 +13,7 @@ class CompanyService {
         return companies;
     }
 
-    public async getCompany(param: object): Promise<Company> {
+    public async getCompany(param: object): Promise<Company[]> {
         const company = await getFromDb(param, 'companies');
         if (!company) {
             throw new HttpException(409, 'Company not found');

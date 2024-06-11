@@ -10,25 +10,25 @@ import HttpException from '@/utils/exceptions/http.exception';
 
 class LotService {
     public async getAllLots(): Promise<Lot[]> {
-        const lots: Lot[] = await getAllDb('lot');
+        const lots: Lot[] = await getAllDb('lots');
         return lots;
     }
 
     public async getLots(param: object): Promise<Lot> {
-        const lot = await getFromDb(param, 'lot');
+        const lot = await getFromDb(param, 'lots');
         if (!lot) {
             throw new HttpException(409, 'lot not found');
         }
-        return lot;
+        return lot[0];
     }
 
     public async createLot(lot: Lot): Promise<string> {
-        const createdLot = await createObjectDb(lot, 'lot');
+        const createdLot = await createObjectDb(lot, 'lots');
         return createdLot;
     }
 
     public async updateLot(param: object, lot: Lot): Promise<string> {
-        const updatedLot = await updateObjectDb(param, lot, 'lot');
+        const updatedLot = await updateObjectDb(param, lot, 'lots');
         if (!updatedLot) {
             throw new HttpException(409, 'lot not found');
         }
@@ -36,7 +36,7 @@ class LotService {
     }
 
     public async deleteLot(param: object): Promise<string> {
-        const deletedLot = await deleteFromDb(param, 'lot');
+        const deletedLot = await deleteFromDb(param, 'lots');
         if (!deletedLot) throw new HttpException(409, 'lot not found');
         return deletedLot;
     }

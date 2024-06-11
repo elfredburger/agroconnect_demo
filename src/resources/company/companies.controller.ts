@@ -88,4 +88,5 @@ class CompanyController implements Controller {
         }
     };
 }
+
 export default CompanyController;

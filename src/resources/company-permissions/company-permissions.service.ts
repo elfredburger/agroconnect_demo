@@ -37,9 +37,9 @@ export class CompanyPermissionService {
 
     public async getUserPermissionsByCompany(
         params: object,
-    ): Promise<Permission[]> {
+    ): Promise<Permission> {
         const permissions = await getFromDb(params, 'permissions');
-        return permissions;
+        return permissions[0];
     }
 
     public async deletePermission(params: object): Promise<String> {

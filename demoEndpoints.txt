@@ -53,4 +53,10 @@ api/product_types - GET {} return {product_types[]}
 api/subscriptions - GET {} return {subscriptions[]}
 
 
+api/products/:id - DELETE {} 
+api/products/getall - GET {} return {product[]}
+api/products/:id - PATCH {} 
+api/products/:id - GET {} return {product}
+api/products/create - POST{product} 
+
 

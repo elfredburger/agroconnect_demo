@@ -18,6 +18,8 @@ import ProductTypeController from './resources/product_type/ptype.controller';
 import RegionController from './resources/region/region.controller';
 import SortController from './resources/sort/sort.controller';
 import SubscriptionsController from './resources/subscriptions/subscriptions.controller';
+import ProductsController from './resources/products/products.controller';
+import CompanyPermissionController from './resources/company-permissions/company-permissions.controller';
 
 //validateEnv();
 const app = new App(
@@ -38,6 +40,8 @@ const app = new App(
         new RegionController(),
         new SortController(),
         new SubscriptionsController(),
+        new ProductsController(),
+        new CompanyPermissionController(),
     ],
     3000,
 );

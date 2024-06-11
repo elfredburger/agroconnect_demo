@@ -18,6 +18,13 @@ api/lots/create - POST{lot}
 api/lots/company/:id - GET{} return {lot[]}
 api/lots/user/:id - GET{} return {lot[]}
 
+api/permissions/get-all - GET
+api/permissions/user-permission/:id -GET
+api/permissions/:companyid - GET
+api/permissions/:companyid/:userid - GET
+api/permission/:companyid/:userid - DELETE 
+api/permission/:companyid/:userid - PATCH 
+api/permission/create - POST
 
 api/bids/:id - DELETE {} 
 api/bids/getall - GET {} return {bid[]}

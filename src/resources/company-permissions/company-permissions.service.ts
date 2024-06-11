@@ -48,7 +48,10 @@ export class CompanyPermissionService {
     }
 
     public async createPermission(permission: Permission): Promise<String> {
-        const createdPermission = await createObjectDb(permission, 'permissions');
+        const createdPermission = await createObjectDb(
+            permission,
+            'permissions',
+        );
         return createdPermission;
     }
 }

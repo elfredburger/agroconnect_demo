@@ -1,3 +1,5 @@
+
+
 CREATE TABLE "companies" (
   "id" SERIAL PRIMARY KEY NOT NULL,
   "name" varchar(255) NOT NULL,
@@ -22,7 +24,8 @@ CREATE TABLE "users" (
   "subscription_id" int DEFAULT null,
   "email" varchar(255) NOT NULL UNIQUE,
   "password" varchar(255) NOT NULL,
-  "token" varchar(255) DEFAULT null
+  "token" varchar(255) DEFAULT null,
+  "phone" varchar(255) DEFAULT null
   
 );
 

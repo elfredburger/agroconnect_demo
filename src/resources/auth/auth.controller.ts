@@ -18,7 +18,7 @@ class AuthController implements Controller {
             this.login,
         );
         this.router.post(`${this.path}/logout`, authenticated, this.logout);
-        this.router.post(`${this.path}/refresh`, authenticated, this.refresh);
+        this.router.get(`${this.path}/refresh`, authenticated, this.refresh);
     }
 
     private logout = async (

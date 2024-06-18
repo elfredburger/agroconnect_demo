@@ -7,15 +7,16 @@ import UserService from '../users/users.service';
 class AuthService {
     private user = new UserService();
 
-    public async refresh(tokenInfo: string): Promise<String | Error> {
+    public async refresh(tokenInfo: string): Promise<User | Error> {
         const user = await this.user.getUser({ token: tokenInfo });
         if (!user) {
             throw new Error('User not found');
         }
         const newToken = await token.createToken(user, '7d');
         await this.user.updateToken({ token: tokenInfo }, newToken);
+        const newuser = await this.user.getUser({ token: newToken });
 
-        return newToken;
+        return newuser;
     }
     public async login(email: string, password: string): Promise<User | Error> {
         const userInfo = await this.user.getUser({ email: email });

@@ -120,7 +120,7 @@ CREATE TABLE "bids" (
   "id" SERIAL PRIMARY KEY NOT NULL,
   "user_id" int NOT NULL,
   "company_id" int NOT NULL,
-  "listing_id" int NOT NULL,
+  "lot_id" int NOT NULL,
   "amount" int NOT NULL
 );
 
@@ -149,7 +149,7 @@ ALTER TABLE "bids" ADD FOREIGN KEY ("company_id") REFERENCES "companies" ("id");
 
 ALTER TABLE "bids" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
-ALTER TABLE "bids" ADD FOREIGN KEY ("listing_id") REFERENCES "lots" ("id");
+ALTER TABLE "bids" ADD FOREIGN KEY ("lot_id") REFERENCES "lots" ("id");
 
 ALTER TABLE "lots" ADD FOREIGN KEY ("company_id") REFERENCES "companies" ("id");
 
@@ -159,7 +159,6 @@ ALTER TABLE "lots" ADD FOREIGN KEY ("measure_unit_id") REFERENCES "measure_units
 
 ALTER TABLE "lots" ADD FOREIGN KEY ("incoterm_id") REFERENCES "incoterms" ("id");
 
-ALTER TABLE "user_company_permissions" ADD FOREIGN KEY ("role") REFERENCES "company_roles" ("id");
 
 ALTER TABLE "lots" ADD FOREIGN KEY ("creator_id") REFERENCES "users" ("id");
 

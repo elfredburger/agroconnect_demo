@@ -3,6 +3,7 @@ import { Request, Response, NextFunction, Router } from 'express';
 import Controller from '@/utils/interfaces/controller.interface';
 import BidService from './bids.service';
 import Bid from '@/utils/interfaces/bid.interface';
+import accessMiddleware from '../../middleware/acces.middleware';
 class BidController implements Controller {
     public path = '/bids';
     public router = Router();
@@ -11,7 +12,11 @@ class BidController implements Controller {
         this.initialiseRoutes();
     }
     private initialiseRoutes(): void {
-        this.router.get(`${this.path}/getall`, this.getAllBids);
+        this.router.get(
+            `${this.path}/getall`,
+            accessMiddleware,
+            this.getAllBids,
+        );
         this.router.post(`${this.path}/create`, this.createBid);
         this.router.get(`${this.path}/:id`, this.getBid);
         this.router.patch(`${this.path}/:id`, this.updateBid);
@@ -42,6 +47,7 @@ class BidController implements Controller {
             next(new HttpException(400, 'Cannot create bid'));
         }
     };
+
     private getBid = async (
         req: Request,
         res: Response,

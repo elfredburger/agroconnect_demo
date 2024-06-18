@@ -12,9 +12,13 @@ export async function deleteFromDb(
 ): Promise<string> {
     const keys = Object.keys(params);
     const values = Object.values(params);
-    const query = `DELETE FROM ${client.escapeIdentifier(table)} WHERE ${keys
-        .map((key, i) => `${client.escapeIdentifier(key)} = $${i + 1}`)
-        .join(' AND ')}`;
+    const query = `DELETE FROM ${client.escapeIdentifier(table)} 
+                    WHERE ${keys
+                        .map(
+                            (key, i) => `${client.escapeIdentifier(key)} 
+                     = $${i + 1}`,
+                        )
+                        .join(' AND ')}`;
 
     `DELETE FROM companies WHERE id = $1 AND name = $2`;
     await client.query(query, values);
@@ -65,9 +69,12 @@ export async function updateObjectDb(
 export async function getFromDb(params: object, table: string): Promise<any[]> {
     const keys = Object.keys(params);
     const values = Object.values(params);
-    const query = `SELECT * FROM ${client.escapeIdentifier(table)} WHERE ${keys
+    const query = `SELECT * FROM ${client.escapeIdentifier(table)} 
+    WHERE ${keys
         .map((key, i) => `${client.escapeIdentifier(key)} = $${i + 1}`)
+
         .join(' AND ')}`;
+
     const { rows } = await client.query(query, values);
     return rows;
 }

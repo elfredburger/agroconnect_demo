@@ -2,7 +2,7 @@ import { NextFunction, Router, Request, Response } from 'express';
 import Controller from '../../utils/interfaces/controller.interface';
 import ProductsService from './products.service';
 import HttpException from '@/utils/exceptions/http.exception';
-import Company from '@/utils/interfaces/company.interface';
+import Company from '@/resources/company/company.interface';
 import { triggerAsyncId } from 'async_hooks';
 
 class ProductsController implements Controller {

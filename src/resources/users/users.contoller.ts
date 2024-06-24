@@ -1,7 +1,7 @@
 import { NextFunction, Router, Request, Response } from 'express';
 import Controller from '../../utils/interfaces/controller.interface';
 import UserService from './users.service';
-import User from '@/utils/interfaces/user.interface';
+import User from '@/resources/users/user.interface';
 import HttpException from '@/utils/exceptions/http.exception';
 import bcrypt from 'bcryptjs';
 class UserController implements Controller {

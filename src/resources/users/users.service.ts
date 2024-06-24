@@ -1,4 +1,4 @@
-import User from '@/utils/interfaces/user.interface';
+import User from '@/resources/users/user.interface';
 import bcrypt from 'bcryptjs';
 import {
     getAllDb,

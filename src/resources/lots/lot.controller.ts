@@ -2,7 +2,7 @@ import HttpException from '@/utils/exceptions/http.exception';
 import { Request, Response, NextFunction, Router } from 'express';
 import Controller from '@/utils/interfaces/controller.interface';
 import LotService from './lot.service';
-import Lot from '@/utils/interfaces/lot.interface';
+import Lot from '@/resources/lots/lot.interface';
 class LotController implements Controller {
     public path = '/lots';
     public router = Router();

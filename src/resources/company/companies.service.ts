@@ -1,4 +1,4 @@
-import Company from '@/utils/interfaces/company.interface';
+import Company from '@/resources/company/company.interface';
 import {
     getAllDb,
     deleteFromDb,

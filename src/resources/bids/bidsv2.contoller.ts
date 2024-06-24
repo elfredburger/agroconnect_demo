@@ -2,7 +2,7 @@ import HttpException from '@/utils/exceptions/http.exception';
 import { Request, Response, NextFunction, Router } from 'express';
 import Controller from '@/utils/interfaces/controller.interface';
 import BidService from './bids.service';
-import Bid from '@/utils/interfaces/bid.interface';
+import Bid from '@/resources/bids/bid.interface';
 import accessMiddleware from '../../middleware/acces.middleware';
 import authenticatedMiddleware from '../../middleware/authenticated.middleware';
 class BidControllerv2 implements Controller {
@@ -112,7 +112,6 @@ class BidControllerv2 implements Controller {
     ): Promise<void> => {
         const { lot_id } = req.params;
         try {
-            
             const bids = await this.BidService.getBid({ lot_id: lot_id });
             res.json(bids);
         } catch (error) {

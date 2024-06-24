@@ -2,7 +2,7 @@ import HttpException from '@/utils/exceptions/http.exception';
 import { Request, Response, NextFunction, Router } from 'express';
 import Controller from '@/utils/interfaces/controller.interface';
 import BidService from './bids.service';
-import Bid from '@/utils/interfaces/bid.interface';
+import Bid from '@/resources/bids/bid.interface';
 import accessMiddleware from '../../middleware/acces.middleware';
 class BidController implements Controller {
     public path = '/bids';

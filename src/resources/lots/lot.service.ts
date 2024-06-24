@@ -1,4 +1,4 @@
-import Lot from '@/utils/interfaces/lot.interface';
+import Lot from '@/resources/lots/lot.interface';
 import {
     getAllDb,
     deleteFromDb,

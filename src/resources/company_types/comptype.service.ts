@@ -1,4 +1,4 @@
-import CompType from '@/utils/interfaces/comptype.interface';
+import CompType from '@/resources/company_types/comptype.interface';
 import { getAllDb } from '@/utils/scripts/sqlQueries';
 import HttpException from '@/utils/exceptions/http.exception';
 

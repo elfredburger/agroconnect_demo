@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import User from '@/utils/interfaces/user.interface';
+import User from '@/resources/users/user.interface';
 import Token from '@/utils/interfaces/token.interface';
 export const createToken = (user: User, duration?: string | number): string => {
     if (duration) {

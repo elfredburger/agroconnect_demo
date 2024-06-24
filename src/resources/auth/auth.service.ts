@@ -1,4 +1,4 @@
-import User from '@/utils/interfaces/user.interface';
+import User from '@/resources/users/user.interface';
 import token from '../../utils/token';
 import HttpException from '../../utils/exceptions/http.exception';
 import bcrypt from 'bcryptjs';

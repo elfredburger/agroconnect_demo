@@ -1,4 +1,4 @@
-import Company from '@/utils/interfaces/company.interface';
+import Company from '@/resources/company/company.interface';
 import {
     getAllDb,
     deleteFromDb,
@@ -7,7 +7,7 @@ import {
     getFromDb,
 } from '@/utils/scripts/sqlQueries';
 import HttpException from '@/utils/exceptions/http.exception';
-import Bid from '@/utils/interfaces/bid.interface';
+import Bid from '@/resources/bids/bid.interface';
 
 class BidService {
     public async getAllBids(): Promise<Bid[]> {

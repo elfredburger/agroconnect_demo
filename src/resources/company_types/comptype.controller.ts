@@ -2,7 +2,7 @@ import { NextFunction, Router, Request, Response } from 'express';
 import Controller from '../../utils/interfaces/controller.interface';
 import CompTypeService from './comptype.service';
 import HttpException from '@/utils/exceptions/http.exception';
-import CompType from '@/utils/interfaces/comptype.interface';
+import CompType from '@/resources/company_types/comptype.interface';
 
 class CompTypeController implements Controller {
     public path = '/comptypes';

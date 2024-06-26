@@ -1,5 +1,5 @@
 import { getAllDb } from '@/utils/scripts/sqlQueries';
-import Measure from '@/utils/interfaces/measure.interface';
+import Measure from '@/resources/measure/measure.interface';
 
 class MeasureService {
     public async getAllMeasures(): Promise<Measure[]> {

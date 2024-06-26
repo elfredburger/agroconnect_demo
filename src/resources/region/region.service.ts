@@ -1,5 +1,5 @@
 import { getAllDb } from '@/utils/scripts/sqlQueries';
-import Region from '@/utils/interfaces/region.interface';
+import Region from '@/resources/region/region.interface';
 
 class RegionService {
     public async getRegions(): Promise<Region[]> {

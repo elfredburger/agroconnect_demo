@@ -5,7 +5,7 @@ import {
     getFromDb,
     updateObjectDb,
 } from '@/utils/scripts/sqlQueries';
-import Permission from '@/utils/interfaces/permissions.interface';
+import Permission from '@/resources/company-permissions/permissions.interface';
 
 export class CompanyPermissionService {
     public async getAllPermissions(): Promise<Permission[]> {

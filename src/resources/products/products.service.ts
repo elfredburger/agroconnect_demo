@@ -8,7 +8,7 @@ import {
 
 import HttpException from '@/utils/exceptions/http.exception';
 
-import Product from '@/utils/interfaces/product.interface';
+import Product from '@/resources/products/product.interface';
 
 class ProductService {
     public async getAllProducts(): Promise<Product[]> {

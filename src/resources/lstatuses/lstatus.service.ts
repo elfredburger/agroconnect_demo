@@ -1,5 +1,5 @@
 import { getAllDb } from '@/utils/scripts/sqlQueries';
-import ListingStatus from '@/utils/interfaces/lstatus.interface';
+import ListingStatus from '@/resources/lstatuses/lstatus.interface';
 
 class ListingStatusService {
     public async getstatus(): Promise<ListingStatus[]> {

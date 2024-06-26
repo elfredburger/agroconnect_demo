@@ -1,5 +1,5 @@
 import { getAllDb } from '@/utils/scripts/sqlQueries';
-import Incoterms from '@/utils/interfaces/incoterm.interface';
+import Incoterms from '@/resources/incoterms/incoterm.interface';
 
 class IncotermsService {
     async getIncoterms(): Promise<Incoterms[]> {

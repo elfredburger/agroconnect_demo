@@ -1,5 +1,5 @@
 import { getAllDb } from '@/utils/scripts/sqlQueries';
-import Country from '@/utils/interfaces/country.interface';
+import Country from '@/resources/countries/country.interface';
 
 class CountriesService {
     async getAllCountries(): Promise<Country[]> {

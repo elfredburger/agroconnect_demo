@@ -14,9 +14,9 @@ class AuthService {
         }
         const newToken = await token.createToken(user, '7d');
         await this.user.updateToken({ token: tokenInfo }, newToken);
-        const newuser = await this.user.getUser({ token: newToken });
+        const newUser = await this.user.getUser({ token: newToken });
 
-        return newuser;
+        return newUser;
     }
     public async login(email: string, password: string): Promise<User | Error> {
         const userInfo = await this.user.getUser({ email: email });

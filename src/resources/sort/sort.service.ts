@@ -1,5 +1,5 @@
 import { getAllDb } from '@/utils/scripts/sqlQueries';
-import Sort from '@/utils/interfaces/sort.interface';
+import Sort from '@/resources/sort/sort.interface';
 import exp from 'constants';
 
 class SortService {

@@ -19,7 +19,7 @@ async function accessMiddleware(
         const accesendpoint = await getFromDb(
             { name: req.path.replace(/\d/g, '') },
             'company_permissions',
-        ); // get enpoint acces permission from req.path
+        ); // get enpoint acces permission from req.path 0010
 
         if (accesendpoint.length == 0) {
             throw new Error('Access denied');

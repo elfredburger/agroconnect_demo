@@ -1,5 +1,5 @@
 import { getAllDb } from '@/utils/scripts/sqlQueries';
-import Subscription from '@/utils/interfaces/subscription.interface';
+import Subscription from '@/resources/subscriptions/subscription.interface';
 
 class SubscriptionsService {
     public async getAllSubscriptions(): Promise<Subscription[]> {

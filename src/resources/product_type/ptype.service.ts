@@ -1,5 +1,5 @@
 import { getAllDb } from '@/utils/scripts/sqlQueries';
-import ProductType from '@/utils/interfaces/ptype.interface';
+import ProductType from '@/resources/product_type/ptype.interface';
 import exp from 'constants';
 
 class ProductTypeService {

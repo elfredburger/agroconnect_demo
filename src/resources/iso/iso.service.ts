@@ -1,5 +1,5 @@
 import { getAllDb } from '@/utils/scripts/sqlQueries';
-import Iso from '@/utils/interfaces/iso.interface';
+import Iso from '@/resources/iso/iso.interface';
 import exp from 'constants';
 
 class IsoService {

@@ -7,6 +7,7 @@ const create = Joi.object({
     phone_number: Joi.string().max(20).required(), //figure out validation of a phone number, joi-phone-number
     email: Joi.string().email().required().max(30),
     owner_id: Joi.number().required().min(1).max(99999999),
+    country_id: Joi.number().required().min(1).max(500),
 });
 
 export default { create };

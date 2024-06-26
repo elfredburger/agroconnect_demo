@@ -8,7 +8,10 @@ CREATE TABLE "companies" (
   "company_type_id" int DEFAULT null,
   "phone_number" varchar(255) DEFAULT null,
   "email" varchar(255) NOT NULL,
-  "owner_id" int NOT NULL
+  "owner_id" int NOT NULL,
+  "buy" boolean,
+  "sell" boolean,
+  "country_id" int DEFAULT NULL
   
 );
 
@@ -68,7 +71,7 @@ CREATE TABLE "product_countries" (
   "name" varchar(255) NOT NULL
 );
 
-CREATE TABLE "dstu_standrats" (
+CREATE TABLE "dstu_standarts" (
   "id" SERIAL PRIMARY KEY NOT NULL,
   "name" varchar(255) NOT NULL,
   "code" varchar(255) NOT NULL
@@ -79,8 +82,8 @@ CREATE TABLE "products" (
   "product_sorts_id" int NOT NULL,
   "product_regions_id" int NOT NULL,
   "product_countries_id" int NOT NULL,
-  "dstu_standrat_id" int NOT NULL,
-  "iso_standart_id" int DEFAULT null,
+  "dstu_standarts_id" int NOT NULL,
+  "iso_standarts_id" int DEFAULT null,
   "name" varchar(255) DEFAULT null,
   
   "moisture" int DEFAULT null,
@@ -173,13 +176,13 @@ ALTER TABLE "companies" ADD FOREIGN KEY ("owner_id") REFERENCES "users" ("id");
 
 ALTER TABLE "product_sorts" ADD FOREIGN KEY ("type_id") REFERENCES "product_types" ("id");
 
-ALTER TABLE "products" ADD FOREIGN KEY ("iso_standart_id") REFERENCES "iso_standarts" ("id");
+ALTER TABLE "products" ADD FOREIGN KEY ("iso_standarts_id") REFERENCES "iso_standarts" ("id");
 
 ALTER TABLE "products" ADD FOREIGN KEY ("product_regions_id") REFERENCES "product_regions" ("id");
 
 ALTER TABLE "products" ADD FOREIGN KEY ("product_countries_id") REFERENCES "product_countries" ("id");
 
-ALTER TABLE "products" ADD FOREIGN KEY ("dstu_standrat_id") REFERENCES "dstu_standrats" ("id");
+ALTER TABLE "products" ADD FOREIGN KEY ("dstu_standarts_id") REFERENCES "dstu_standarts" ("id");
 
 ALTER TABLE "products" ADD FOREIGN KEY ("product_sorts_id") REFERENCES "product_sorts" ("id");
 
@@ -190,7 +193,7 @@ INSERT INTO listing_statuses(name) VALUES ('Open'), ('Closed'), ('Sold');
 INSERT INTO subscriptions(name) VALUES ('Free'), ('Basic'), ('Premium'), ('Enterprise');
 INSERT INTO product_countries(name) VALUES ('Ukraine'), ('Poland'), ('Germany'), ('Italy'), ('USA'), ('Japan');
 INSERT INTO product_regions(name) VALUES ('Mykolaiv Region'), ('Kyiv Region'), ('Lviv Region'), ('Sumy Region'), ('Konstantinovka Region');
-INSERT INTO dstu_standrats(name, code) VALUES ('DSTU 1', 'DSTU1'), ('DSTU 2', 'DSTU2'), ('DSTU 3', 'DSTU3'), ('DSTU 4', 'DSTU4'), ('DSTU 5', 'DSTU5');
+INSERT INTO dstu_standarts(name, code) VALUES ('DSTU 1', 'DSTU1'), ('DSTU 2', 'DSTU2'), ('DSTU 3', 'DSTU3'), ('DSTU 4', 'DSTU4'), ('DSTU 5', 'DSTU5');
 INSERT INTO iso_standarts(code, name) VALUES ('ISO 1', 'ISO1'), ('ISO 2', 'ISO2'), ('ISO 3', 'ISO3'), ('ISO 4', 'ISO4'), ('ISO 5', 'ISO5');
 ALTER SEQUENCE public.iso_standarts_id_seq RESTART WITH 1;
 INSERT INTO incoterms(name) VALUES ('CIF'), ('CRF'), ('CIP'),('CPT'),('DAP'),('DDP'),('DPU'),('EXW'),
@@ -204,12 +207,12 @@ INSERT INTO users(first_name, last_name, subscription_id, email, password, token
 ('firstname2', 'lastname2', 2, 'user2@a.a', '123456789', 'token2'),
 ('firstname3', 'lastname3', 3, 'user3@a.a', '123456789', 'token3'),
 ('firstname4', 'lastname4', 4, 'user4@a.a', '123456789', 'token4');
-INSERT INTO companies(name, tax_id, company_type_id, phone_number, email, owner_id) VALUES 
-('TestCompany1', 'taxid1', 1, '123456789', 'company1@a.a', 1),
-('TestCompany2', 'taxid2', 2, '123456789', 'company2@a.a', 2),
-('TestCompany3', 'taxid3', 3, '123456789', 'company3@a.a', 3),
-('TestCompany4', 'taxid4', 1, '123456789', 'company4@a.a', 4);
-INSERT INTO products(product_sorts_id, product_regions_id, product_countries_id, dstu_standrat_id, iso_standart_id, name, moisture, damage, dirt, undersize) 
+INSERT INTO companies(name, tax_id, company_type_id, phone_number, email, owner_id,country_id) VALUES 
+('TestCompany1', 'taxid1', 1, '123456789', 'company1@a.a', 1,1),
+('TestCompany2', 'taxid2', 2, '123456789', 'company2@a.a', 2,1),
+('TestCompany3', 'taxid3', 3, '123456789', 'company3@a.a', 3,2),
+('TestCompany4', 'taxid4', 1, '123456789', 'company4@a.a', 4,3);
+INSERT INTO products(product_sorts_id, product_regions_id, product_countries_id, dstu_standarts_id, iso_standarts_id, name, moisture, damage, dirt, undersize) 
 VALUES (1, 1, 1, 1, 1, 'product1', 10, 10, 10, 10), (2, 2, 2, 2, 2, 'product2', 20, 20, 20, 20), 
 (3, 3, 3, 3, 3, 'product3', 30, 30, 30, 30), (4, 4, 4, 4, 4, 'product4', 40, 40, 40, 40);
 INSERT INTO lots(name, company_id, product_id, weight, description, status_id, measure_unit_id, creator_id, incoterm_id, packaging) 

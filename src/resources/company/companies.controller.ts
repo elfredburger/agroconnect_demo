@@ -12,6 +12,7 @@ class CompanyController implements Controller {
     }
     private initialiseRoutes(): void {
         this.router.get(`${this.path}/getall`, this.getAllCompanies);
+        this.router.get(`${this.path}/getdemo`, this.getDemoCompanies);
         this.router.post(`${this.path}/create`, this.createCompany);
         this.router.get(`${this.path}/:id`, this.getCompany);
         this.router.patch(`${this.path}/:id`, this.updateCompany);
@@ -85,6 +86,19 @@ class CompanyController implements Controller {
             res.json(company);
         } catch (error) {
             next(new HttpException(400, 'Cannot delete company'));
+        }
+    };
+
+    private getDemoCompanies = async (
+        req: Request,
+        res: Response,
+        next: NextFunction,
+    ): Promise<void> => {
+        try {
+            const companies = await this.CompanyService.getAllCompaniesDemo();
+            res.json(companies);
+        } catch (error) {
+            next(new HttpException(400, 'cannot get companies'));
         }
     };
 }

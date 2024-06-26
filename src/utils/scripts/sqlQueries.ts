@@ -1,3 +1,4 @@
+import exp from 'constants';
 import client from '../../db';
 export async function getAllDb(table: string): Promise<any[]> {
     const query = `SELECT * FROM ${client.escapeIdentifier(table)}`;
@@ -79,10 +80,27 @@ export async function getFromDb(params: object, table: string): Promise<any[]> {
     return rows;
 }
 
+export async function getFieldsFromDb(
+    params: object,
+    table: string,
+): Promise<any[]> {
+    const keys = Object.keys(params);
+    const values = Object.values(params);
+
+    const query = `SELECT ${keys
+        .map((key, i) => `${client.escapeIdentifier(key)} `)
+
+        .join(' , ')} FROM ${client.escapeIdentifier(table)}`;
+
+    const { rows } = await client.query(query);
+    return rows;
+}
+
 module.exports = {
     getAllDb,
     createObjectDb,
     deleteFromDb,
     updateObjectDb,
     getFromDb,
+    getFieldsFromDb,
 };

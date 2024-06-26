@@ -5,6 +5,7 @@ import {
     createObjectDb,
     updateObjectDb,
     getFromDb,
+    getFieldsFromDb,
 } from '@/utils/scripts/sqlQueries';
 import HttpException from '@/utils/exceptions/http.exception';
 class CompanyService {
@@ -45,6 +46,15 @@ class CompanyService {
     public async deleteCompany(param: object): Promise<string> {
         const deleteCompanyData = await deleteFromDb(param, 'companies');
         return deleteCompanyData;
+    }
+
+    public async getAllCompaniesDemo(): Promise<any[]> {
+        const companies = await getFieldsFromDb(
+            { id: 'id', name: 'name' },
+            'companies',
+        );
+
+        return companies;
     }
 }
 

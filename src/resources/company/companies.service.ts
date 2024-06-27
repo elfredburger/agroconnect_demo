@@ -17,7 +17,7 @@ class CompanyService {
     public async getCompany(param: object): Promise<Company[]> {
         const company = await getFromDb(param, 'companies');
         if (company.length == 0) {
-            throw new HttpException(409, 'Company not found');
+            throw new HttpException(400, 'Company not found');
         }
         return company;
     }
@@ -27,6 +27,9 @@ class CompanyService {
             companyData,
             'companies',
         );
+        if (createCompanyData === 'Create to Db failed') {
+            throw new HttpException(400, createCompanyData);
+        }
         return createCompanyData;
     }
 
@@ -39,12 +42,18 @@ class CompanyService {
             companyData,
             'companies',
         );
+        if (updateCompanyData === 'Update to Db failed') {
+            throw new HttpException(400, updateCompanyData);
+        }
 
         return updateCompanyData;
     }
 
     public async deleteCompany(param: object): Promise<string> {
         const deleteCompanyData = await deleteFromDb(param, 'companies');
+        if (deleteCompanyData === 'Delete from Db failed') {
+            throw new HttpException(400, deleteCompanyData);
+        }
         return deleteCompanyData;
     }
 
@@ -53,6 +62,9 @@ class CompanyService {
             { id: 'id', name: 'name' },
             'companies',
         );
+        if (companies.length == 0) {
+            throw new HttpException(400, 'Companies not found');
+        }
 
         return companies;
     }

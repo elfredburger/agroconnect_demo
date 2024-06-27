@@ -19,23 +19,31 @@ class UserService {
             user.password = await bcrypt.hash(user.password, 10);
         }
         const updatedUser = await updateObjectDb(param, user, 'users');
-
+        if (updatedUser === 'Update to Db failed') {
+            throw new HttpException(400, updatedUser);
+        }
         return updatedUser;
     }
     public async getUser(param: object): Promise<User[]> {
         const user = await getFromDb(param, 'users');
-        if (user.length == 0) throw new HttpException(409, 'User not found');
+        if (user.length == 0) throw new HttpException(400, 'User not found');
 
         return user;
     }
     public async deleteUser(param: object): Promise<string> {
         const deletedUser = await deleteFromDb(param, 'users');
+        if (deletedUser === 'Delete from Db failed') {
+            throw new HttpException(400, deletedUser);
+        }
 
         return deletedUser;
     }
     public async createUser(user: User): Promise<string> {
         user.password = await bcrypt.hash(user.password, 10);
         const createdUser = await createObjectDb(user, 'users');
+        if (createdUser === 'Create to Db failed') {
+            throw new HttpException(400, createdUser);
+        }
         return createdUser;
     }
 
@@ -45,7 +53,10 @@ class UserService {
             { token: token },
             'users',
         );
-        if (!updatedUser) throw new HttpException(409, 'User not found');
+        if (updatedUser === 'Update to Db failed') {
+            throw new HttpException(400, updatedUser);
+        }
+
         return updatedUser;
     }
 }

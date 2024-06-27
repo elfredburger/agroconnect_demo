@@ -20,12 +20,11 @@ async function authenticatedMiddleware(
         const payload: Token | jwt.JsonWebTokenError =
             await token.verifyToken(accessToken);
         if (payload instanceof jwt.JsonWebTokenError) {
-            return next(new HttpException(401, 'Unauthorized'));
+            return next(new HttpException(401, payload.message));
         }
         const user = await getFromDb({ token: accessToken }, 'users');
-        console.log(user);
         if (user.length === 0) {
-            return next(new HttpException(401, 'Unauthorized'));
+            return next(new HttpException(401, 'User not Found'));
         }
         user[0].password = '';
         req.user = user; //тут не понятно с типами и как это исправить

@@ -211,15 +211,16 @@ INSERT INTO users(first_name, last_name, subscription_id, email, password, token
 ('firstname3', 'lastname3', 3, 'user3@a.a', '123456789', 'token3'),
 ('firstname4', 'lastname4', 4, 'user4@a.a', '123456789', 'token4');
 INSERT INTO companies(name, tax_id, company_type_id, phone_number, email, owner_id,country_id) VALUES 
-('TestCompany1', 'taxid1', 1, '123456789', 'company1@a.a', 1,1),
-('TestCompany2', 'taxid2', 2, '123456789', 'company2@a.a', 2,1),
-('TestCompany3', 'taxid3', 3, '123456789', 'company3@a.a', 3,2),
-('TestCompany4', 'taxid4', 1, '123456789', 'company4@a.a', 4,3);
+('TestCompany1', 'taxid1', 1, '123456789', 'company1@a.ca', 1,1),
+('TestCompany2', 'taxid2', 2, '123456789', 'company2@a.ca', 2,1),
+('TestCompany3', 'taxid3', 3, '123456789', 'company3@a.ca', 3,2),
+('TestCompany4', 'taxid4', 1, '123456789', 'company4@a.ca', 4,3);
 INSERT INTO products(product_sorts_id, product_regions_id, product_countries_id, dstu_standarts_id, iso_standarts_id, name, moisture, damage, dirt, undersize) 
 VALUES (1, 1, 1, 1, 1, 'product1', 10, 10, 10, 10), (2, 2, 2, 2, 2, 'product2', 20, 20, 20, 20), 
 (3, 3, 3, 3, 3, 'product3', 30, 30, 30, 30), (4, 4, 4, 4, 4, 'product4', 40, 40, 40, 40);
 INSERT INTO lots(name, company_id, product_id, weight, description, status_id, measure_unit_id, creator_id, incoterm_id, packaging) 
 VALUES ('lot1', 1, 1, 100, 'description', 1, 1, 1, 1, 'packaging');
+INSERT INTO bids(user_id,company_id,lot_id,amount) VALUES (1,1,1,500),(2,2,1,600),(1,1,1,800),(3,2,1,850)
 
 
 

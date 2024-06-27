@@ -19,7 +19,7 @@ import RegionController from './resources/region/region.controller';
 import SortController from './resources/sort/sort.controller';
 import SubscriptionsController from './resources/subscriptions/subscriptions.controller';
 import ProductsController from './resources/products/products.controller';
-import CompanyPermissionController from './resources/company-permissions/company-permissions.controller';
+import CompanyPermissionController from './resources/company_permissions/company_permissions.controller';
 import BidControllerv2 from './resources/bids/bidsv2.contoller';
 
 //validateEnv();

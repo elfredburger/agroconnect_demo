@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import Controller from '../../utils/interfaces/controller.interface';
-import { CompanyPermissionService } from './company-permissions.service';
+import { CompanyPermissionService } from './company_permissions.service';
 import HttpException from '@/utils/exceptions/http.exception';
 
 class CompanyPermissionController implements Controller {

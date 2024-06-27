@@ -5,7 +5,7 @@ import {
     getFromDb,
     updateObjectDb,
 } from '@/utils/scripts/sqlQueries';
-import Permission from '@/resources/company-permissions/permissions.interface';
+import Permission from '@/resources/company_permissions/permissions.interface';
 import HttpException from '@/utils/exceptions/http.exception';
 
 export class CompanyPermissionService {
@@ -23,19 +23,25 @@ export class CompanyPermissionService {
             permission,
             'permissions',
         );
+        if (updatedPermission === 'Update to Db failed') {
+            throw new HttpException(400, updatedPermission);
+        }
         return updatedPermission;
     }
 
     public async getPermissions(params: object): Promise<Permission[]> {
         const permissions = await getFromDb(params, 'permissions');
         if (permissions.length == 0) {
-            throw new HttpException(409, ' Company Permissions not found');
+            throw new HttpException(400, ' Company Permissions not found');
         }
         return permissions;
     }
 
     public async deletePermission(params: object): Promise<String> {
         const deletedPermission = await deleteFromDb(params, 'permissions');
+        if (deletedPermission === 'Delete from Db failed') {
+            throw new HttpException(400, deletedPermission);
+        }
         return deletedPermission;
     }
 
@@ -44,6 +50,9 @@ export class CompanyPermissionService {
             permission,
             'permissions',
         );
+        if (createdPermission === 'Create to Db failed') {
+            throw new HttpException(400, createdPermission);
+        }
         return createdPermission;
     }
 }

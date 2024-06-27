@@ -65,7 +65,7 @@ export async function updateObjectDb(
     ('Update companies SET name = $1,type = $2 WHERE id = $3');
 
     const dbquery = await client.query(query, [...values, ...paramvalues]);
-    if (dbquery.rowCount != null && dbquery.rowCount <= 0) {
+    if (dbquery.rowCount !== null && dbquery.rowCount <= 0) {
         return 'Update to Db failed';
     }
     return 'Update successful';

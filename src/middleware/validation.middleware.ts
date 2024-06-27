@@ -1,3 +1,4 @@
+import HttpException from '@/utils/exceptions/http.exception';
 import { Request, Response, NextFunction, RequestHandler } from 'express';
 import Joi from 'joi';
 
@@ -20,12 +21,9 @@ function validationMiddleware(schema: Joi.Schema): RequestHandler {
             req.body = value;
             next();
         } catch (error: any) {
-            const errors: string[] = [];
-            error.details.forEach((error: Joi.ValidationErrorItem) => {
-                errors.push(error.message);
-                res.send(errors);
-            });
+            next(new HttpException(400, 'email incorrect'));
         }
     };
 }
+
 export default validationMiddleware;

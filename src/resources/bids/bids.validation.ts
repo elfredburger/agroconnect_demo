@@ -1,3 +1,4 @@
+import exp from 'constants';
 import Joi from 'joi';
 const create = Joi.object({
     user_id: Joi.number().required().min(1).max(99999999),
@@ -5,3 +6,4 @@ const create = Joi.object({
     lot_id: Joi.number().required().min(1).max(99999999),
     amount: Joi.number().required().min(1).max(99999999),
 });
+export default { create };

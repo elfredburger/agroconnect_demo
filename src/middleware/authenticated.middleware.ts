@@ -27,6 +27,7 @@ async function authenticatedMiddleware(
         if (user.length === 0) {
             return next(new HttpException(401, 'Unauthorized'));
         }
+        user[0].password = '';
         req.user = user; //тут не понятно с типами и как это исправить
         next();
     } catch (error) {

@@ -25,7 +25,7 @@ class MeasureController implements Controller {
             const measure = await this.dstuService.getAllMeasures();
             res.status(200).json({ measure });
         } catch (error) {
-            next(new HttpException(400, 'Failed to get measure'));
+            next(error);
         }
     };
 }

@@ -6,6 +6,7 @@ import {
     updateObjectDb,
 } from '@/utils/scripts/sqlQueries';
 import Permission from '@/resources/company-permissions/permissions.interface';
+import HttpException from '@/utils/exceptions/http.exception';
 
 export class CompanyPermissionService {
     public async getAllPermissions(): Promise<Permission[]> {
@@ -25,21 +26,12 @@ export class CompanyPermissionService {
         return updatedPermission;
     }
 
-    public async getCompanyPermissions(params: object): Promise<Permission[]> {
+    public async getPermissions(params: object): Promise<Permission[]> {
         const permissions = await getFromDb(params, 'permissions');
+        if (permissions.length == 0) {
+            throw new HttpException(409, ' Company Permissions not found');
+        }
         return permissions;
-    }
-
-    public async getUserPermissions(params: object): Promise<Permission[]> {
-        const permissions = await getFromDb(params, 'permissions');
-        return permissions;
-    }
-
-    public async getUserPermissionsByCompany(
-        params: object,
-    ): Promise<Permission> {
-        const permissions = await getFromDb(params, 'permissions');
-        return permissions[0];
     }
 
     public async deletePermission(params: object): Promise<String> {

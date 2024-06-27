@@ -3,6 +3,8 @@ import { Request, Response, NextFunction, Router } from 'express';
 import Controller from '@/utils/interfaces/controller.interface';
 import LotService from './lot.service';
 import Lot from '@/resources/lots/lot.interface';
+import validationMiddleware from '../../middleware/validation.middleware';
+import validation from './lots.validation';
 class LotController implements Controller {
     public path = '/lots';
     public router = Router();
@@ -12,7 +14,11 @@ class LotController implements Controller {
     }
     private initialiseRoutes(): void {
         this.router.get(`${this.path}/getall`, this.getAllLots);
-        this.router.post(`${this.path}/create`, this.createLot);
+        this.router.post(
+            `${this.path}/create`,
+            validationMiddleware(validation.create),
+            this.createLot,
+        );
         this.router.get(`${this.path}/:id`, this.getLot);
         this.router.patch(`${this.path}/:id`, this.updateLot);
         this.router.delete(`${this.path}/:id`, this.deleteLot);
@@ -28,7 +34,7 @@ class LotController implements Controller {
             const lots = await this.lotService.getAllLots();
             res.json(lots);
         } catch (error) {
-            next(new HttpException(400, 'Cannot get lots'));
+            next(error);
         }
     };
     private createLot = async (
@@ -42,7 +48,7 @@ class LotController implements Controller {
             const lot = await this.lotService.createLot(lotData);
             res.json(lot);
         } catch (error) {
-            next(new HttpException(400, 'Cannot create lot'));
+            next(error);
         }
     };
     private getLot = async (
@@ -55,7 +61,7 @@ class LotController implements Controller {
             const lot = await this.lotService.getLots({ id: id });
             res.json(lot);
         } catch (error) {
-            next(new HttpException(400, 'Cannot get lot'));
+            next(error);
         }
     };
     private updateLot = async (
@@ -69,7 +75,7 @@ class LotController implements Controller {
             const lot = await this.lotService.updateLot({ id: id }, lotData);
             res.json(lot);
         } catch (error) {
-            next(new HttpException(400, 'Cannot update lot'));
+            next(error);
         }
     };
     private deleteLot = async (
@@ -82,7 +88,7 @@ class LotController implements Controller {
             const lot = await this.lotService.deleteLot({ id: id });
             res.json(lot);
         } catch (error) {
-            next(new HttpException(400, 'Cannot delete lot'));
+            next(error);
         }
     };
     private getLotsByCompanyId = async (
@@ -95,7 +101,7 @@ class LotController implements Controller {
             const lots = await this.lotService.getLots({ id: id });
             res.json(lots);
         } catch (error) {
-            next(new HttpException(400, 'Cannot get lots'));
+            next(error);
         }
     };
     private getLotsByUserId = async (
@@ -108,7 +114,7 @@ class LotController implements Controller {
             const lots = await this.lotService.getLots({ id: id });
             res.json(lots);
         } catch (error) {
-            next(new HttpException(400, 'Cannot get lots'));
+            next(error);
         }
     };
 }

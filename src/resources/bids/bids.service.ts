@@ -17,7 +17,7 @@ class BidService {
 
     public async getBid(param: object): Promise<Bid[]> {
         const bid = await getFromDb(param, 'bids');
-        if (!bid) throw new HttpException(409, "Bid doesn't exist");
+        if (bid.length == 0) throw new HttpException(409, "Bid doesn't exist");
         return bid;
     }
 
@@ -33,6 +33,7 @@ class BidService {
 
     public async deleteBid(param: object): Promise<string> {
         const deletedBidData = await deleteFromDb(param, 'bids');
+
         return deletedBidData;
     }
 }

@@ -3,6 +3,8 @@ import Controller from '../../utils/interfaces/controller.interface';
 import CompanyService from './companies.service';
 import HttpException from '@/utils/exceptions/http.exception';
 import Company from '@/resources/company/company.interface';
+import validationMiddleware from '../../middleware/validation.middleware';
+import validation from './companies.validation';
 class CompanyController implements Controller {
     public path = '/companies';
     public router = Router();
@@ -13,7 +15,11 @@ class CompanyController implements Controller {
     private initialiseRoutes(): void {
         this.router.get(`${this.path}/getall`, this.getAllCompanies);
         this.router.get(`${this.path}/getdemo`, this.getDemoCompanies);
-        this.router.post(`${this.path}/create`, this.createCompany);
+        this.router.post(
+            `${this.path}/create`,
+            validationMiddleware(validation.create),
+            this.createCompany,
+        );
         this.router.get(`${this.path}/:id`, this.getCompany);
         this.router.patch(`${this.path}/:id`, this.updateCompany);
         this.router.delete(`${this.path}/:id`, this.deleteCompany);
@@ -28,7 +34,7 @@ class CompanyController implements Controller {
             console.log(companies);
             res.json(companies);
         } catch (error) {
-            next(new HttpException(400, 'Cannot get companies'));
+            next(error);
         }
     };
     private createCompany = async (
@@ -42,7 +48,7 @@ class CompanyController implements Controller {
                 await this.CompanyService.createCompany(companyData);
             res.json(company);
         } catch (error) {
-            next(new HttpException(400, 'Cannot create company'));
+            next(error);
         }
     };
     private getCompany = async (
@@ -55,7 +61,7 @@ class CompanyController implements Controller {
             const company = await this.CompanyService.getCompany({ id: id });
             res.json(company);
         } catch (error) {
-            next(new HttpException(400, 'Cannot get company'));
+            next(error);
         }
     };
     private updateCompany = async (
@@ -72,7 +78,7 @@ class CompanyController implements Controller {
             );
             res.json(company);
         } catch (error) {
-            next(new HttpException(400, 'Cannot update company'));
+            next(error);
         }
     };
     private deleteCompany = async (
@@ -85,7 +91,7 @@ class CompanyController implements Controller {
             const company = await this.CompanyService.deleteCompany({ id: id });
             res.json(company);
         } catch (error) {
-            next(new HttpException(400, 'Cannot delete company'));
+            next(error);
         }
     };
 
@@ -98,7 +104,7 @@ class CompanyController implements Controller {
             const companies = await this.CompanyService.getAllCompaniesDemo();
             res.json(companies);
         } catch (error) {
-            next(new HttpException(400, 'cannot get companies'));
+            next(error);
         }
     };
 }

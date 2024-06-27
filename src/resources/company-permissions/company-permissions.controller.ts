@@ -78,7 +78,7 @@ class CompanyPermissionController implements Controller {
         try {
             const { companyid } = req.params;
             const permissions =
-                await this.CompanyPermissionService.getCompanyPermissions({
+                await this.CompanyPermissionService.getPermissions({
                     company_id: companyid,
                 });
             res.json(permissions);
@@ -95,12 +95,12 @@ class CompanyPermissionController implements Controller {
         try {
             const { userid } = req.params;
             const permissions =
-                await this.CompanyPermissionService.getUserPermissions({
+                await this.CompanyPermissionService.getPermissions({
                     user_id: userid,
                 });
             res.json(permissions);
         } catch (error) {
-            next(new HttpException(400, 'Cannot get permissions'));
+            next(error);
         }
     };
 
@@ -112,15 +112,13 @@ class CompanyPermissionController implements Controller {
         try {
             const { companyid, userid } = req.params;
             const permissions =
-                await this.CompanyPermissionService.getUserPermissionsByCompany(
-                    {
-                        company_id: companyid,
-                        user_id: userid,
-                    },
-                );
+                await this.CompanyPermissionService.getPermissions({
+                    company_id: companyid,
+                    user_id: userid,
+                });
             res.json(permissions);
         } catch (error) {
-            next(new HttpException(400, 'Cannot get permissions'));
+            next(error);
         }
     };
 
@@ -137,7 +135,7 @@ class CompanyPermissionController implements Controller {
             });
             res.sendStatus(200);
         } catch (error) {
-            next(new HttpException(400, 'Cannot delete permission'));
+            next(error);
         }
     };
 
@@ -154,7 +152,7 @@ class CompanyPermissionController implements Controller {
                 );
             res.json(createdPermission);
         } catch (error) {
-            next(new HttpException(400, 'Cannot create permission'));
+            next(error);
         }
     };
 }

@@ -7,7 +7,7 @@ async function accessMiddleware(
 ): Promise<Response | Error | void> {
     try {
         const accesuser = await getFromDb(
-            { user_id: req.user[0].id, company_id: 1 },
+            { user_id: req.user[0].id, company_id: req.params.company_id }, //not tested
             'user_company_permissions',
         );
         // get user acces from db by user id (from token) and company id from params

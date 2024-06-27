@@ -25,7 +25,7 @@ class ProductTypeController implements Controller {
             const ptypes = await this.ProductTypeService.getTypes();
             res.status(200).json({ ptypes });
         } catch (error: any) {
-            next(new HttpException(400, error));
+            next(error);
         }
     };
 }

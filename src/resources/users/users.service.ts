@@ -8,6 +8,7 @@ import {
     updateObjectDb,
 } from '@/utils/scripts/sqlQueries';
 import HttpException from '../../utils/exceptions/http.exception';
+import { error } from 'console';
 class UserService {
     public async getAllUsers(): Promise<User[]> {
         const users = await getAllDb('users');
@@ -18,18 +19,18 @@ class UserService {
             user.password = await bcrypt.hash(user.password, 10);
         }
         const updatedUser = await updateObjectDb(param, user, 'users');
-        if (!updatedUser) throw new HttpException(409, 'User not found');
+
         return updatedUser;
     }
-    public async getUser(param: object): Promise<User> {
+    public async getUser(param: object): Promise<User[]> {
         const user = await getFromDb(param, 'users');
-        if (!user) throw new HttpException(409, 'User not found');
+        if (user.length == 0) throw new HttpException(409, 'User not found');
 
-        return user[0];
+        return user;
     }
     public async deleteUser(param: object): Promise<string> {
         const deletedUser = await deleteFromDb(param, 'users');
-        if (!deletedUser) throw new HttpException(409, 'User not found');
+
         return deletedUser;
     }
     public async createUser(user: User): Promise<string> {

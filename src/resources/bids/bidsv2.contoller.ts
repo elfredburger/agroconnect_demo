@@ -5,6 +5,8 @@ import BidService from './bids.service';
 import Bid from '@/resources/bids/bid.interface';
 import accessMiddleware from '../../middleware/acces.middleware';
 import authenticatedMiddleware from '../../middleware/authenticated.middleware';
+import validationMiddleware from '../../middleware/validation.middleware';
+import validate from './bids.validation';
 class BidControllerv2 implements Controller {
     public path = '/bidsv2';
     public router = Router();
@@ -13,50 +15,44 @@ class BidControllerv2 implements Controller {
         this.initialiseRoutes();
     }
     private initialiseRoutes(): void {
-        this.router.get(
-            `${this.path}/getall`,
-            accessMiddleware,
-            this.getAllBids,
-        );
         this.router.get(`${this.path}/:id`, this.getBid);
         this.router.patch(`${this.path}/:id`, this.updateBid);
         this.router.delete(`${this.path}/:id`, this.deleteBid);
-        this.router.post(`${this.path}/create`, this.createBid); // create from body? or from url params
+        this.router.post(
+            `${this.path}/create`,
+            validationMiddleware(validate.create),
+            this.createBid,
+        );
+        this.router.get(
+            `${this.path}/getall`,
 
+            this.getAllBids,
+        );
         this.router.get(
             `${this.path}/lot=:lot_id/getall`, //get all bids from a lot
-            authenticatedMiddleware,
-            accessMiddleware,
             this.getLotBids,
         );
 
         this.router.get(
             `${this.path}/lot=:lot_id/company=:company_id/getall`, //get all bids from a lot by a certain company
-            authenticatedMiddleware,
-            accessMiddleware,
+
             this.getCompanyLotBids,
         );
 
         this.router.get(
-            `${this.path}/user/getall`,
+            `${this.path}/user/getall`, //get all bids from a user
 
-            authenticatedMiddleware,
-            accessMiddleware,
-            //get all bids from a user
             this.getUserBids,
         );
 
         this.router.get(
             `${this.path}/lot=:lot_id/user/getall`, //get all bids from a lot by a certain user
-            authenticatedMiddleware,
-            accessMiddleware,
+
             this.getLotUserBids,
         );
 
         this.router.get(
-            `${this.path}/company=:company_id/getall`,
-            authenticatedMiddleware,
-            accessMiddleware, //get all bids from a company
+            `${this.path}/company=:company_id/getall`, //get all bids from a company
             this.getCompanyBids,
         );
     }
@@ -72,7 +68,7 @@ class BidControllerv2 implements Controller {
             });
             res.json(bids);
         } catch (error) {
-            next(new HttpException(400, 'Cannot get bids'));
+            next(error);
         }
     };
     private getLotUserBids = async (
@@ -89,7 +85,7 @@ class BidControllerv2 implements Controller {
             });
             res.json(bids);
         } catch (error) {
-            next(new HttpException(400, 'Cannot get bids'));
+            next(error);
         }
     };
     private getUserBids = async (
@@ -102,7 +98,7 @@ class BidControllerv2 implements Controller {
             const bids = await this.BidService.getBid({ user_id: user_id });
             res.json(bids);
         } catch (error) {
-            next(new HttpException(400, 'Cannot get bids'));
+            next(error);
         }
     };
     private getLotBids = async (
@@ -115,7 +111,7 @@ class BidControllerv2 implements Controller {
             const bids = await this.BidService.getBid({ lot_id: lot_id });
             res.json(bids);
         } catch (error) {
-            next(new HttpException(400, 'Cannot get bids'));
+            next(error);
         }
     };
 
@@ -132,7 +128,7 @@ class BidControllerv2 implements Controller {
             });
             res.json(bids);
         } catch (error) {
-            next(new HttpException(400, 'Cannot get bids'));
+            next(error);
         }
     };
     private getAllBids = async (
@@ -144,7 +140,7 @@ class BidControllerv2 implements Controller {
             const bids = await this.BidService.getAllBids();
             res.json(bids);
         } catch (error) {
-            next(new HttpException(400, 'Cannot get bids'));
+            next(error);
         }
     };
     private createBid = async (
@@ -157,7 +153,7 @@ class BidControllerv2 implements Controller {
             const bid = await this.BidService.createBid(bidData);
             res.json(bid);
         } catch (error) {
-            next(new HttpException(400, 'Cannot create bid'));
+            next(error);
         }
     };
 
@@ -167,11 +163,12 @@ class BidControllerv2 implements Controller {
         next: NextFunction,
     ): Promise<void> => {
         const { id } = req.params;
+        console.log(id);
         try {
             const bid = await this.BidService.getBid({ id: id });
             res.json(bid);
         } catch (error) {
-            next(new HttpException(400, 'Cannot get bid'));
+            next(error);
         }
     };
     private updateBid = async (
@@ -185,7 +182,7 @@ class BidControllerv2 implements Controller {
             const bid = await this.BidService.updateBid({ id: id }, bidData);
             res.json(bid);
         } catch (error) {
-            next(new HttpException(400, 'Cannot update bid'));
+            next(error);
         }
     };
     private deleteBid = async (
@@ -198,7 +195,7 @@ class BidControllerv2 implements Controller {
             const bid = await this.BidService.deleteBid({ id: id });
             res.json(bid);
         } catch (error) {
-            next(new HttpException(400, 'Cannot delete bid'));
+            next(error);
         }
     };
 }

@@ -11,3 +11,5 @@ const create = Joi.object({
     incoterm_id: Joi.number().required().min(9999999).max(99999999),
     packaging: Joi.string().max(255),
 });
+
+export default { create };

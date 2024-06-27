@@ -25,7 +25,7 @@ class CountriesController implements Controller {
             const countries = await this.DstuService.getAllCountries();
             return res.status(200).json({ data: countries });
         } catch (error) {
-            next(new HttpException(400, 'Failed to get countries'));
+            next(error);
         }
     };
 }

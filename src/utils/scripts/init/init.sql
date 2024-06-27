@@ -174,6 +174,9 @@ ALTER TABLE "companies" ADD FOREIGN KEY ("company_type_id") REFERENCES "company_
 
 ALTER TABLE "companies" ADD FOREIGN KEY ("owner_id") REFERENCES "users" ("id");
 
+ALTER TABLE "companies" ADD FOREIGN KEY ("country_id") REFERENCES "product_countries" ("id");
+
+
 ALTER TABLE "product_sorts" ADD FOREIGN KEY ("type_id") REFERENCES "product_types" ("id");
 
 ALTER TABLE "products" ADD FOREIGN KEY ("iso_standarts_id") REFERENCES "iso_standarts" ("id");

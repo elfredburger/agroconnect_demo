@@ -25,7 +25,7 @@ class SortController implements Controller {
             const result = await this.sort.getAllSorts();
             res.status(200).send(result);
         } catch (error: any) {
-            next(new HttpException(400, error.message));
+            next(error);
         }
     };
 }

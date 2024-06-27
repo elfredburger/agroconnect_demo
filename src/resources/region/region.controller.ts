@@ -25,7 +25,7 @@ class RegionController implements Controller {
             const regions = await this.RegionService.getRegions();
             res.status(200).json({ regions });
         } catch (error: any) {
-            next(new HttpException(400, error.message));
+            next(error);
         }
     };
 }

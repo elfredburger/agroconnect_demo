@@ -6,6 +6,6 @@ export const client = new Client({
     password: process.env.DB_PASSWORD,
     host: process.env.DB_URL,
     port: 5439,
-    database: 'demo1',
+    database: 'keycloak',
 });
 export default client;

@@ -24,7 +24,7 @@ class IsoController implements Controller {
             const iso = await this.IsoService.getiso();
             res.json(iso);
         } catch (error) {
-            next(new HttpException(400, 'Cannot get iso'));
+            next(error);
         }
     };
 }

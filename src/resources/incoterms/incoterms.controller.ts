@@ -25,7 +25,7 @@ class IncotermsController implements Controller {
             const incoterms = await this.IncotermsService.getIncoterms();
             res.status(200).json({ incoterms });
         } catch (error) {
-            next(new HttpException(400, 'Could not get incoterms'));
+            next(error);
         }
     };
 }

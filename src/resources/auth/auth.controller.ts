@@ -3,6 +3,8 @@ import Controller from '../../utils/interfaces/controller.interface';
 import HttpException from '../../utils/exceptions/http.exception';
 import AuthService from '../../resources/auth/auth.service';
 import authenticated from '../../middleware/authenticated.middleware';
+import validationMiddleware from '../../middleware/validation.middleware';
+import validation from '../users/user.validation';
 class AuthController implements Controller {
     public path = '/auth';
     public router = Router();
@@ -14,7 +16,7 @@ class AuthController implements Controller {
     private initialiseRoutes(): void {
         this.router.post(
             `${this.path}/login`,
-
+            validationMiddleware(validation.login),
             this.login,
         );
         this.router.post(`${this.path}/logout`, authenticated, this.logout);
@@ -31,8 +33,8 @@ class AuthController implements Controller {
                 req.headers.authorization?.replace('Bearer ', '') as string,
             );
             res.status(200).json('logged out');
-        } catch (error: any) {
-            next(new HttpException(400, error.message));
+        } catch (error) {
+            next(error);
         }
     };
 
@@ -46,10 +48,10 @@ class AuthController implements Controller {
             '',
         ) as string;
         try {
-            const token = await this.AuthService.refresh(refreshToken);
-            res.status(200).json({ token });
-        } catch (error: any) {
-            next(new HttpException(400, error.message));
+            const user = await this.AuthService.refresh(refreshToken);
+            res.status(200).json(user);
+        } catch (error) {
+            next(error);
         }
     };
 
@@ -62,8 +64,8 @@ class AuthController implements Controller {
             await authenticated(req, res, next);
 
             res.status(200).json('Secret data');
-        } catch (error: any) {
-            next(new HttpException(400, error.message));
+        } catch (error) {
+            next(error);
         }
     };
 
@@ -76,8 +78,8 @@ class AuthController implements Controller {
             const { email, password } = req.body;
             const user = await this.AuthService.login(email, password);
             res.status(200).json({ user });
-        } catch (error: any) {
-            next(new HttpException(400, error.message));
+        } catch (error) {
+            next(error);
         }
     };
 }

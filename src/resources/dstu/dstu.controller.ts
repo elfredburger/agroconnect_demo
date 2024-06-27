@@ -23,7 +23,7 @@ class DstuController implements Controller {
             const dstu = await this.DstuService.findAll();
             res.json(dstu);
         } catch (error) {
-            next(new HttpException(400, 'Cannot get dstu'));
+            next(error);
         }
     };
 }

@@ -26,7 +26,7 @@ class CompTypeController implements Controller {
             const compTypes = await this.CompTypeService.getAllCompTypes();
             res.json(compTypes);
         } catch (error) {
-            next(new HttpException(400, 'Cannot get comp types'));
+            next(error);
         }
     };
 }

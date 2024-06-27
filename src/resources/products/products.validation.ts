@@ -11,3 +11,5 @@ const create = Joi.object({
     dirt: Joi.number().required().min(9999999).max(99999999),
     undersize: Joi.number().required().min(9999999).max(99999999),
 });
+
+export default { create };

@@ -23,6 +23,9 @@ class ProductService {
 
     public async getProduct(param: object): Promise<Product[]> {
         const product = await getFromDb(param, 'products');
+        if (product.length == 0) {
+            throw new HttpException(409, 'Product not found');
+        }
         return product;
     }
 

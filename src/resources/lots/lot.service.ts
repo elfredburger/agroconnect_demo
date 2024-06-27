@@ -14,12 +14,12 @@ class LotService {
         return lots;
     }
 
-    public async getLots(param: object): Promise<Lot> {
+    public async getLots(param: object): Promise<Lot[]> {
         const lot = await getFromDb(param, 'lots');
-        if (!lot) {
+        if (lot.length == 0) {
             throw new HttpException(409, 'lot not found');
         }
-        return lot[0];
+        return lot;
     }
 
     public async createLot(lot: Lot): Promise<string> {

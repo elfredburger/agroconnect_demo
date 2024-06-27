@@ -12,26 +12,27 @@ class AuthService {
         if (!user) {
             throw new Error('User not found');
         }
-        const newToken = await token.createToken(user, '7d');
+        const newToken = await token.createToken(user[0], '7d');
         await this.user.updateToken({ token: tokenInfo }, newToken);
         const newUser = await this.user.getUser({ token: newToken });
-
-        return newUser;
+        newUser[0].password = '';
+        return newUser[0];
     }
     public async login(email: string, password: string): Promise<User | Error> {
         const userInfo = await this.user.getUser({ email: email });
         if (!userInfo) {
             throw new Error('User not found');
         }
-        if (await bcrypt.compare(password, userInfo.password)) {
+        if (await bcrypt.compare(password, userInfo[0].password)) {
             await this.user.updateToken(
                 { email: email },
-                token.createToken(userInfo, '7d'),
+                token.createToken(userInfo[0], '7d'),
             );
-            const updatedUser = (await this.user.getUser({
+            const updatedUser = await this.user.getUser({
                 email: email,
-            })) as User;
-            return updatedUser;
+            });
+            updatedUser[0].password = '';
+            return updatedUser[0];
         } else {
             throw new Error('Wrong password');
         }

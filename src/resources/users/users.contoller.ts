@@ -2,8 +2,8 @@ import { NextFunction, Router, Request, Response } from 'express';
 import Controller from '../../utils/interfaces/controller.interface';
 import UserService from './users.service';
 import User from '@/resources/users/user.interface';
-import HttpException from '@/utils/exceptions/http.exception';
-import bcrypt from 'bcryptjs';
+import validationMiddleware from '../../middleware/validation.middleware';
+import validation from './user.validation';
 class UserController implements Controller {
     public path = '/users';
     public router = Router();
@@ -14,10 +14,18 @@ class UserController implements Controller {
 
     private initialiseRoutes(): void {
         this.router.get(`${this.path}/getall`, this.getAllUsers);
-        this.router.post(`${this.path}/create`, this.createUser);
+        this.router.post(
+            `${this.path}/create`,
+            validationMiddleware(validation.create),
+            this.createUser,
+        );
         this.router.delete(`${this.path}/:id`, this.deleteUser);
         this.router.get(`${this.path}/:id`, this.getUser);
-        this.router.patch(`${this.path}/:id`, this.updateUser);
+        this.router.patch(
+            `${this.path}/:id`,
+            validationMiddleware(validation.update),
+            this.updateUser,
+        );
     }
     private getAllUsers = async (
         req: Request,
@@ -28,7 +36,7 @@ class UserController implements Controller {
             const users = await this.UserService.getAllUsers();
             res.json(users);
         } catch (error) {
-            next(new HttpException(400, 'Cannot get users'));
+            next(error);
         }
     };
     private updateUser = async (
@@ -45,7 +53,7 @@ class UserController implements Controller {
             );
             res.json(user);
         } catch (error) {
-            next(new HttpException(400, 'Cannot update user'));
+            next(error);
         }
     };
     private getUser = async (
@@ -56,10 +64,10 @@ class UserController implements Controller {
         try {
             const id = req.params.id;
 
-            const user: User = await this.UserService.getUser({ id: id });
+            const user = await this.UserService.getUser({ id: id });
             res.json(user);
         } catch (error) {
-            next(new HttpException(400, 'Cannot get user'));
+            next(error);
         }
     };
     private deleteUser = async (
@@ -69,10 +77,10 @@ class UserController implements Controller {
     ): Promise<void> => {
         try {
             const id = req.params.id;
-            await this.UserService.deleteUser({ id: id });
-            res.json('user deleted');
+            const result = await this.UserService.deleteUser({ id: id });
+            res.json(result);
         } catch (error) {
-            next(new HttpException(400, 'Cannot delete user'));
+            next(error);
         }
     };
     private createUser = async (
@@ -85,7 +93,7 @@ class UserController implements Controller {
             const user = await this.UserService.createUser(userData);
             res.json(user);
         } catch (error) {
-            next(new HttpException(400, 'Cannot create user'));
+            next(error);
         }
     };
 }

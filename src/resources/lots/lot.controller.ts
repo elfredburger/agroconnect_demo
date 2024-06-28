@@ -1,4 +1,3 @@
-import HttpException from '@/utils/exceptions/http.exception';
 import { Request, Response, NextFunction, Router } from 'express';
 import Controller from '@/utils/interfaces/controller.interface';
 import LotService from './lot.service';

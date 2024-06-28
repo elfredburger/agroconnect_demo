@@ -23,7 +23,7 @@ class CountriesController implements Controller {
     ): Promise<Response | void> => {
         try {
             const countries = await this.DstuService.getAllCountries();
-            return res.status(200).json({ data: countries });
+            return res.status(200).json({ countries });
         } catch (error) {
             next(error);
         }

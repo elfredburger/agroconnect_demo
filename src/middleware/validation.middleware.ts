@@ -20,8 +20,8 @@ function validationMiddleware(schema: Joi.Schema): RequestHandler {
             );
             req.body = value;
             next();
-        } catch (error: any) {
-            next(new HttpException(400, 'email incorrect'));
+        } catch (e: any) {
+            next(new HttpException(400, e.message));
         }
     };
 }
